@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-label="Prosthetic hand placeholder">
+  <rect width="1200" height="800" fill="#f8fafc"/>
+  <circle cx="250" cy="160" r="220" fill="#ccfbf1"/>
+  <circle cx="1010" cy="700" r="280" fill="#fef3c7"/>
+  <g fill="none" stroke="#0f172a" stroke-width="34" stroke-linecap="round">
+    <path d="M420 520 C470 390 520 295 575 175"/>
+    <path d="M535 540 C570 390 610 280 650 135"/>
+    <path d="M650 545 C662 395 690 285 720 155"/>
+    <path d="M755 535 C750 410 770 320 835 220"/>
+    <path d="M415 545 C345 465 320 405 350 330"/>
+  </g>
+  <path d="M430 535 C510 480 705 485 805 535 L785 665 C690 710 535 705 455 655 Z" fill="#0f766e"/>
+  <g stroke="#f59e0b" stroke-width="10" stroke-linecap="round">
+    <path d="M500 610H735"/>
+    <path d="M540 650H690"/>
+  </g>
+</svg>

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-label="Music app placeholder">
+  <rect width="1200" height="800" fill="#111827"/>
+  <circle cx="250" cy="230" r="190" fill="#0f766e"/>
+  <circle cx="920" cy="585" r="250" fill="#f59e0b"/>
+  <rect x="250" y="180" width="700" height="440" rx="42" fill="#f8fafc"/>
+  <circle cx="410" cy="400" r="105" fill="#0f172a"/>
+  <circle cx="410" cy="400" r="30" fill="#f8fafc"/>
+  <rect x="570" y="310" width="250" height="26" rx="13" fill="#0f766e"/>
+  <rect x="570" y="375" width="310" height="20" rx="10" fill="#cbd5e1"/>
+  <rect x="570" y="430" width="220" height="20" rx="10" fill="#cbd5e1"/>
+  <path d="M835 310 V475 C835 520 790 535 760 510 C725 480 748 435 790 440" fill="none" stroke="#f59e0b" stroke-width="28" stroke-linecap="round"/>
+</svg>
