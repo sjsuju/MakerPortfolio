@@ -1,4 +1,4 @@
-import { ArrowUpRight, Bot, Cpu, Hand, Wrench } from "lucide-react";
+import { ArrowUpRight, Bot, CpuIcon, Hand, WrenchIcon } from "lucide-react";
 import Image from "next/image";
 import { PageShell } from "@/components/page-shell";
 import { SectionHeading } from "@/components/section-heading";
@@ -10,23 +10,23 @@ import { projects } from "@/lib/data";
 const makerAreas = [
   {
     title: "Robotics mechanisms",
-    text: "Intake, sorting, launching, field interaction, and iteration cycles for FTC constraints.",
+    text: "Designing and building mechanical systems for FIRST Tech Challenge. A showcase of engineering creativity, iteration, and problem-solving.",
     icon: Bot
   },
   {
     title: "Assistive hardware",
-    text: "3D printed hand geometry, EMG signal flow, servo actuation, and embedded control.",
+    text: "Using EMG sensors and activation patterns assisted by AI classification to shift control from traditional input methods to more intuitive and accessible interfaces.",
     icon: Hand
   },
   {
     title: "Embedded systems",
     text: "ESP32 prototyping, sensor integration, PWM driver control, and bench validation.",
-    icon: Cpu
+    icon: CpuIcon
   },
   {
     title: "Fabrication workflow",
     text: "CAD, printing, assembly, failure analysis, and quick redesign loops.",
-    icon: Wrench
+    icon: WrenchIcon
   }
 ];
 
@@ -41,7 +41,7 @@ export default function ProjectsPage() {
         />
         <div className="mt-12 grid gap-6">
           {projects.map((project) => (
-            <Card key={project.title} className="overflow-hidden bg-white/82 shadow-sm">
+            <Card key={project.title} className="overflow-hidden" data-reveal>
               <div className="grid gap-0 lg:grid-cols-[0.82fr_1.18fr]">
                 <div className="relative min-h-64 overflow-hidden">
                   <Image src={project.image} alt="" fill sizes="(min-width: 1024px) 40vw, 100vw" className="object-cover" />
@@ -68,7 +68,7 @@ export default function ProjectsPage() {
           ))}
         </div>
       </section>
-      <section className="bg-white/50 py-16">
+      <section className="bg-foreground/[0.03] py-16 dark:bg-white/[0.02]">
         <div className="container">
           <SectionHeading
             eyebrow="Maker Portfolio"
@@ -79,8 +79,8 @@ export default function ProjectsPage() {
             {makerAreas.map((area) => {
               const Icon = area.icon;
               return (
-                <Card key={area.title} className="bg-white/82 p-6 shadow-sm">
-                  <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-lg bg-accent text-accent-foreground">
+                <Card key={area.title} className="p-6" data-reveal>
+                  <div className="liquid-icon mb-5 flex h-12 w-12 items-center justify-center rounded-lg text-primary">
                     <Icon className="h-5 w-5" />
                   </div>
                   <h2 className="text-xl font-semibold">{area.title}</h2>
@@ -93,8 +93,11 @@ export default function ProjectsPage() {
       </section>
       <section className="container py-16 md:py-20">
         <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
-          <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">
+          <div data-reveal>
+            <p className="font-mono text-xs font-semibold uppercase tracking-[0.22em] text-primary">
+              <span aria-hidden="true" className="mr-2 text-hazard">
+                {"//"}
+              </span>
               Timeline
             </p>
             <h2 className="mt-3 text-3xl font-semibold tracking-tight">

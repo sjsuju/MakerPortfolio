@@ -8,9 +8,12 @@ export function SectionHeading({
   text?: string;
 }) {
   return (
-    <div className="mx-auto max-w-3xl text-center">
+    <div className="mx-auto max-w-3xl text-center" data-reveal>
       {eyebrow ? (
-        <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-primary">
+        <p className="mb-3 font-mono text-xs font-semibold uppercase tracking-[0.22em] text-primary">
+          <span aria-hidden="true" className="mr-2 text-hazard">
+            {"//"}
+          </span>
           {eyebrow}
         </p>
       ) : null}

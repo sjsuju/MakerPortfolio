@@ -31,6 +31,7 @@ web_modules/
 tsconfig.tsbuildinfo
 
 # Tool caches
+.agents/
 .npm
 .eslintcache
 .stylelintcache
@@ -65,3 +66,8 @@ Thumbs.db
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+# Agent-readable project notes live in InfoForAgent/.
+/decisions.md
+/overview.md
+.tokensave

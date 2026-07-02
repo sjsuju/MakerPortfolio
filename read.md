@@ -62,11 +62,11 @@ It includes:
 - Working style notes.
 - Email, GitHub, and LinkedIn cards.
 - A send-email button.
-- Resume profile, project experience, and skill list.
-- Placeholder PDF button labeled "PDF soon".
+- Screen resume preview and print-ready resume layout.
+- Working print action through `/contact?print=resume#resume`.
 - Timeline.
 
-The current contact data is stored in `lib/data.ts`. Some values appear to be placeholders, such as `sooraj@example.com`, and should be replaced before publishing.
+The current contact data is stored in `lib/data.ts`.
 
 Old `/about` and `/resume` links redirect to `/contact`.
 
@@ -76,7 +76,6 @@ Old `/about` and `/resume` links redirect to `/contact`.
 - React 19
 - TypeScript
 - Tailwind CSS
-- Framer Motion
 - Lucide React icons
 - Radix Slot
 - ESLint
@@ -95,25 +94,30 @@ app/
   page.tsx
 
 components/
-  bento-grid.tsx
   footer.tsx
-  hero.tsx
   navbar.tsx
   page-shell.tsx
-  project-card.tsx
+  print-resume-handler.tsx
   section-heading.tsx
-  skill-badge.tsx
   timeline.tsx
   ui/
 
 lib/
   data.ts
-  icons.ts
   utils.ts
 
 public/
   placeholders/
+
+InfoForAgent/
+  OpenItem.md
+  ProjectMemory.md
+  decisions.md
+  overview.md
 ```
+
+`InfoForAgent/` is the intended home for durable agent-readable project notes.
+`.agents/` is treated as local tool scratch space and is ignored.
 
 ## Where Content Lives
 
@@ -122,12 +126,9 @@ Most site content is centralized in `lib/data.ts`.
 Edit that file to update:
 
 - Navigation links.
-- Project names, roles, summaries, descriptions, tags, and images.
-- Skills.
-- Process steps.
+- Project names, roles, descriptions, tags, and images.
 - Timeline items.
 - Contact links.
-- Hero stats.
 
 Individual page copy lives inside the corresponding files under `app/`.
 

@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --background: 210 24% 98%;
+  --background: 210 26% 97%;
   --foreground: 222 47% 11%;
   --card: 0 0% 100%;
   --card-foreground: 222 47% 11%;
@@ -13,12 +13,32 @@
   --secondary-foreground: 188 80% 15%;
   --muted: 210 22% 94%;
   --muted-foreground: 215 16% 43%;
-  --accent: 37 86% 91%;
-  --accent-foreground: 24 85% 19%;
-  --border: 214 22% 88%;
-  --input: 214 22% 88%;
+  --accent: 24 95% 91%;
+  --accent-foreground: 21 90% 30%;
+  --hazard: 21 90% 45%;
+  --border: 214 22% 86%;
+  --input: 214 22% 86%;
   --ring: 196 88% 23%;
   --radius: 0.5rem;
+}
+
+.dark {
+  --background: 222 47% 5%;
+  --foreground: 210 24% 96%;
+  --card: 222 40% 11%;
+  --card-foreground: 210 24% 96%;
+  --primary: 187 82% 52%;
+  --primary-foreground: 222 47% 9%;
+  --secondary: 189 44% 16%;
+  --secondary-foreground: 164 44% 82%;
+  --muted: 217 33% 15%;
+  --muted-foreground: 215 20% 65%;
+  --accent: 21 65% 20%;
+  --accent-foreground: 27 96% 68%;
+  --hazard: 27 96% 61%;
+  --border: 217 30% 20%;
+  --input: 217 30% 20%;
+  --ring: 187 82% 52%;
 }
 
 * {
@@ -32,17 +52,346 @@ html {
 body {
   min-height: 100vh;
   background:
-    radial-gradient(circle at top left, rgba(45, 212, 191, 0.14), transparent 30rem),
-    radial-gradient(circle at top right, rgba(245, 158, 11, 0.12), transparent 26rem),
+    radial-gradient(circle at top left, rgba(45, 212, 191, 0.1), transparent 30rem),
+    radial-gradient(circle at top right, rgba(249, 115, 22, 0.07), transparent 26rem),
     hsl(var(--background));
   color: hsl(var(--foreground));
-  font-family:
-    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    sans-serif;
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display), var(--font-sans), sans-serif;
 }
 
 ::selection {
-  background: rgba(13, 148, 136, 0.22);
+  background: hsl(var(--hazard) / 0.28);
+}
+
+/* ---------------------------------------------------------------------------
+   Gear field: fixed scroll-driven gear train behind all content, over a faint
+   drafting grid. Cards use backdrop-filter, so the gears blur behind them
+   like machinery seen through frosted glass.
+--------------------------------------------------------------------------- */
+
+.gear-field {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  color: rgba(51, 65, 85, 0.5);
+}
+
+.dark .gear-field {
+  color: rgba(148, 163, 184, 0.4);
+}
+
+.gear-field::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(15, 23, 42, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 23, 42, 0.055) 1px, transparent 1px),
+    linear-gradient(rgba(15, 23, 42, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 23, 42, 0.08) 1px, transparent 1px);
+  background-size:
+    32px 32px,
+    32px 32px,
+    160px 160px,
+    160px 160px;
+}
+
+.dark .gear-field::before {
+  background-image:
+    linear-gradient(rgba(148, 163, 184, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.07) 1px, transparent 1px),
+    linear-gradient(rgba(148, 163, 184, 0.11) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.11) 1px, transparent 1px);
+}
+
+.gear-cluster {
+  position: absolute;
+  z-index: 1;
+}
+
+.gear-cluster-a {
+  left: -60px;
+  top: -40px;
+}
+
+.gear-cluster-ring {
+  right: -70px;
+  top: 22vh;
+  color: rgba(51, 65, 85, 0.3);
+}
+
+.dark .gear-cluster-ring {
+  color: rgba(148, 163, 184, 0.24);
+}
+
+.gear-cluster-b {
+  right: -30px;
+  bottom: -110px;
+}
+
+.gear-cluster-c {
+  left: 32%;
+  top: 54vh;
+  color: rgba(51, 65, 85, 0.36);
+}
+
+.dark .gear-cluster-c {
+  color: rgba(148, 163, 184, 0.3);
+}
+
+.gear {
+  position: absolute;
+  filter: drop-shadow(0 16px 28px rgba(15, 23, 42, 0.08));
+  will-change: transform;
+}
+
+.charge-field {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.charge-wire {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.charge-wire-base {
+  stroke: hsl(var(--primary) / 0.11);
+  stroke-width: 2;
+  stroke-dasharray: 8 16;
+}
+
+.charge-wire-active {
+  stroke: hsl(var(--hazard) / 0.44);
+  stroke-width: 2.4;
+  filter: drop-shadow(0 0 7px hsl(var(--hazard) / 0.24));
+  transition: stroke-dashoffset 80ms linear;
+}
+
+.charge-wire-bridge {
+  stroke: hsl(var(--hazard) / 0.86);
+  stroke-width: 4.5;
+  filter: drop-shadow(0 0 13px hsl(var(--hazard) / 0.44));
+  transition: stroke-dashoffset 80ms linear;
+}
+
+.charge-node {
+  position: absolute;
+  z-index: 2;
+  display: grid;
+  width: clamp(24px, 1.55vw, 34px);
+  height: clamp(24px, 1.55vw, 34px);
+  place-items: center;
+  border-radius: 999px;
+  filter: drop-shadow(0 0 14px hsl(var(--hazard) / 0.48));
+  transform: translate(-50%, -50%);
+  will-change: left, top;
+}
+
+.charge-node-halo {
+  position: absolute;
+  inset: -8px;
+  border: 1px solid hsl(var(--hazard) / 0.38);
+  border-radius: inherit;
+  background:
+    radial-gradient(circle, hsl(var(--hazard) / 0.34) 0 19%, hsl(var(--hazard) / 0.13) 42%, transparent 72%),
+    rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(4px) saturate(1.2);
+  -webkit-backdrop-filter: blur(4px) saturate(1.2);
+}
+
+.charge-node-core {
+  position: relative;
+  width: clamp(10px, 0.65vw, 14px);
+  height: clamp(10px, 0.65vw, 14px);
+  border: 2px solid rgba(255, 255, 255, 0.78);
+  border-radius: inherit;
+  background:
+    radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.95), transparent 23%),
+    hsl(var(--hazard));
+  box-shadow:
+    0 0 0 1px hsl(var(--hazard) / 0.42),
+    0 0 18px hsl(var(--hazard) / 0.7);
+}
+
+.gear-tone-cyan {
+  color: hsl(var(--primary) / 0.5);
+}
+
+.gear-tone-hazard {
+  color: hsl(var(--hazard) / 0.45);
+}
+
+@media (max-width: 767px) {
+  .gear-cluster-a {
+    transform: scale(0.6);
+    transform-origin: top left;
+  }
+
+  .gear-cluster-ring {
+    transform: scale(0.6);
+    transform-origin: right center;
+  }
+
+  .gear-cluster-b {
+    transform: scale(0.6);
+    transform-origin: bottom right;
+  }
+
+  .gear-cluster-c {
+    left: 8%;
+    transform: scale(0.6);
+    transform-origin: top left;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Glass surfaces: frosted panels over the gear field.
+--------------------------------------------------------------------------- */
+
+.glass-panel {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.66);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.34), rgba(255, 255, 255, 0.14) 54%, rgba(255, 255, 255, 0.075));
+  backdrop-filter: blur(38px) saturate(1.25) contrast(1.03);
+  -webkit-backdrop-filter: blur(38px) saturate(1.25) contrast(1.03);
+  box-shadow:
+    0 18px 54px rgba(11, 21, 36, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.18);
+}
+
+.glass-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    linear-gradient(120deg, rgba(255, 255, 255, 0.42), transparent 34%),
+    radial-gradient(circle at 24% 0%, rgba(255, 255, 255, 0.16), transparent 21rem);
+  opacity: 0.72;
+  pointer-events: none;
+}
+
+.glass-panel > * {
+  position: relative;
+  z-index: 1;
+}
+
+.dark .glass-panel {
+  border-color: rgba(255, 255, 255, 0.17);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.078), rgba(255, 255, 255, 0.028) 58%, rgba(255, 255, 255, 0.014));
+  box-shadow:
+    0 18px 52px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.dark .glass-panel::before {
+  background:
+    linear-gradient(120deg, rgba(255, 255, 255, 0.14), transparent 34%),
+    radial-gradient(circle at 24% 0%, rgba(255, 255, 255, 0.065), transparent 21rem);
+  opacity: 0.58;
+}
+
+.glass-inverse {
+  border-color: rgba(255, 255, 255, 0.16);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.095), rgba(255, 255, 255, 0.034) 58%, rgba(255, 255, 255, 0.02));
+  box-shadow:
+    0 22px 68px rgba(15, 23, 42, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.glass-inverse::before {
+  background:
+    linear-gradient(120deg, rgba(255, 255, 255, 0.15), transparent 34%),
+    radial-gradient(circle at 100% 0%, rgba(255, 255, 255, 0.06), transparent 16rem);
+  opacity: 0.68;
+}
+
+.liquid-icon {
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.065);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    0 10px 24px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(18px) saturate(1.15);
+  -webkit-backdrop-filter: blur(18px) saturate(1.15);
+}
+
+.glass-hover {
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.glass-hover:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 255, 255, 0.28);
+  box-shadow:
+    0 24px 66px rgba(11, 21, 36, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.72);
+}
+
+.dark .glass-hover:hover {
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow:
+    0 22px 58px rgba(0, 0, 0, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+.glass-bar {
+  background: rgba(255, 255, 255, 0.48);
+  backdrop-filter: blur(24px) saturate(1.55);
+  -webkit-backdrop-filter: blur(24px) saturate(1.55);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.64);
+}
+
+.dark .glass-bar {
+  background: rgba(7, 12, 22, 0.55);
+}
+
+/* ---------------------------------------------------------------------------
+   Scroll reveal: activated by RevealManager, skipped for reduced motion.
+--------------------------------------------------------------------------- */
+
+.reveal-ready [data-reveal] {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 550ms ease,
+    transform 550ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal-ready [data-reveal].is-revealed {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-ready [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
 
 .grid-pattern {
@@ -56,130 +405,454 @@ body {
   mask-image: linear-gradient(to bottom, black, transparent);
 }
 
-.gear-field {
+.pcb-field {
   position: absolute;
   inset: 0;
   overflow: hidden;
   background:
-    linear-gradient(120deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.18)),
-    radial-gradient(circle at 68% 28%, rgba(13, 148, 136, 0.2), transparent 24rem),
-    radial-gradient(circle at 22% 72%, rgba(245, 158, 11, 0.16), transparent 22rem);
+    linear-gradient(120deg, rgba(248, 250, 252, 0.38), rgba(241, 245, 249, 0.18)),
+    radial-gradient(circle at 74% 22%, rgba(13, 148, 136, 0.13), transparent 24rem),
+    radial-gradient(circle at 20% 78%, rgba(249, 115, 22, 0.09), transparent 24rem);
 }
 
-.gear-field::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(15, 23, 42, 0.055) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(15, 23, 42, 0.055) 1px, transparent 1px);
-  background-size: 44px 44px;
-  opacity: 0.72;
-}
-
-.gear-ring,
-.gear-orbit {
+.pcb-glow {
   position: absolute;
   border-radius: 999px;
-  opacity: 0.72;
-  will-change: transform;
+  filter: blur(12px);
+  opacity: 0.5;
 }
 
-.gear-ring {
-  aspect-ratio: 1;
-  border: 1.15rem dashed rgba(15, 23, 42, 0.14);
-  box-shadow:
-    inset 0 0 0 1.4rem rgba(255, 255, 255, 0.58),
-    0 2rem 8rem rgba(15, 23, 42, 0.1);
-}
-
-.gear-ring::before,
-.gear-ring::after {
-  content: "";
-  position: absolute;
-  border-radius: inherit;
-}
-
-.gear-ring::before {
-  inset: 22%;
-  border: 0.7rem solid rgba(13, 148, 136, 0.18);
-  background: rgba(255, 255, 255, 0.34);
-}
-
-.gear-ring::after {
-  inset: 43%;
-  background: rgba(15, 23, 42, 0.14);
-}
-
-.gear-ring-one {
-  right: -7rem;
-  top: 5rem;
-  width: clamp(18rem, 34vw, 34rem);
-  animation: gear-spin 34s linear infinite;
-}
-
-.gear-ring-two {
-  bottom: -9rem;
-  left: -7rem;
-  width: clamp(16rem, 29vw, 28rem);
-  border-color: rgba(245, 158, 11, 0.18);
-  animation: gear-spin-reverse 28s linear infinite;
-}
-
-.gear-ring-three {
-  bottom: 18%;
-  right: 21%;
-  width: clamp(9rem, 14vw, 14rem);
-  border-width: 0.75rem;
-  opacity: 0.46;
-  animation: gear-spin 20s linear infinite;
-}
-
-.gear-orbit {
-  border: 1px solid rgba(15, 23, 42, 0.1);
-}
-
-.gear-orbit-one {
-  left: 11%;
-  top: 17%;
+.pcb-glow-one {
+  right: 9%;
+  top: 9%;
   width: 18rem;
   height: 18rem;
-  animation: gear-float 14s ease-in-out infinite;
+  background: rgba(20, 184, 166, 0.16);
 }
 
-.gear-orbit-two {
-  right: 10%;
-  bottom: 11%;
-  width: 12rem;
-  height: 12rem;
-  animation: gear-float 18s ease-in-out infinite reverse;
+.pcb-glow-two {
+  bottom: 8%;
+  left: 12%;
+  width: 16rem;
+  height: 16rem;
+  background: rgba(217, 119, 6, 0.12);
 }
 
-@keyframes gear-spin {
-  to {
-    transform: rotate(360deg);
-  }
+.pcb-home {
+  position: relative;
+  width: min(100%, 72rem);
+  min-height: 38rem;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.64);
+  border-radius: var(--radius);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.46), rgba(255, 255, 255, 0.18)),
+    radial-gradient(circle at 50% 44%, rgba(13, 148, 136, 0.1), transparent 22rem);
+  box-shadow:
+    0 26px 90px rgba(15, 23, 42, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.74);
+  backdrop-filter: blur(22px) saturate(1.45);
+  -webkit-backdrop-filter: blur(22px) saturate(1.45);
 }
 
-@keyframes gear-spin-reverse {
-  to {
-    transform: rotate(-360deg);
-  }
+.pcb-home::before {
+  content: "";
+  position: absolute;
+  inset: 1.1rem;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: calc(var(--radius) - 2px);
+  pointer-events: none;
 }
 
-@keyframes gear-float {
+.pcb-traces {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.pcb-trace-main,
+.pcb-trace-faint {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.pcb-trace-main {
+  stroke: url("#traceGradient");
+  stroke-width: 7;
+}
+
+.pcb-trace-faint {
+  stroke: rgba(15, 23, 42, 0.12);
+  stroke-width: 2.5;
+}
+
+.pcb-pad {
+  fill: rgba(255, 255, 255, 0.88);
+  stroke: rgba(13, 148, 136, 0.42);
+  stroke-width: 4;
+}
+
+.pcb-pulse {
+  fill: #0f766e;
+  opacity: 0.78;
+  filter: drop-shadow(0 0 10px rgba(13, 148, 136, 0.52));
+  animation: pcb-pulse-fade 4.8s ease-in-out infinite;
+}
+
+.pcb-pulse-delay-one {
+  animation-delay: 0.9s;
+}
+
+.pcb-pulse-delay-two {
+  animation-delay: 1.8s;
+}
+
+.pcb-chip-card {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 2;
+  width: min(35rem, calc(100% - 2rem));
+  min-height: 18.5rem;
+  transform: translate(-50%, -50%);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: var(--radius);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.66), rgba(255, 255, 255, 0.34)),
+    linear-gradient(90deg, hsl(var(--primary) / 0.06), hsl(var(--hazard) / 0.045));
+  padding: 2rem;
+  text-align: center;
+  box-shadow:
+    0 26px 80px rgba(15, 23, 42, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(32px) saturate(1.7);
+  -webkit-backdrop-filter: blur(32px) saturate(1.7);
+}
+
+.pcb-pin {
+  position: absolute;
+  pointer-events: none;
+}
+
+.pcb-pin::before {
+  content: "";
+  position: absolute;
+}
+
+.pcb-pin-top,
+.pcb-pin-bottom {
+  left: 12%;
+  right: 12%;
+  height: 1.5rem;
+}
+
+.pcb-pin-top {
+  top: -1.5rem;
+}
+
+.pcb-pin-bottom {
+  bottom: -1.5rem;
+}
+
+.pcb-pin-top::before,
+.pcb-pin-bottom::before {
+  inset: 0;
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(15, 23, 42, 0.16) 0 0.28rem,
+    transparent 0.28rem 1.95rem
+  );
+}
+
+.pcb-pin-left,
+.pcb-pin-right {
+  top: 12%;
+  bottom: 12%;
+  width: 1.5rem;
+}
+
+.pcb-pin-left {
+  left: -1.5rem;
+}
+
+.pcb-pin-right {
+  right: -1.5rem;
+}
+
+.pcb-pin-left::before,
+.pcb-pin-right::before {
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(15, 23, 42, 0.16) 0 0.28rem,
+    transparent 0.28rem 1.95rem
+  );
+}
+
+.pcb-button {
+  position: absolute;
+  z-index: 3;
+  display: inline-flex;
+  min-width: 10.5rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.52);
+  padding: 0.95rem 1.1rem;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: hsl(var(--foreground));
+  box-shadow: 0 18px 50px rgba(15, 23, 42, 0.1);
+  backdrop-filter: blur(22px) saturate(1.55);
+  -webkit-backdrop-filter: blur(22px) saturate(1.55);
+  transition:
+    transform 150ms ease,
+    border-color 150ms ease,
+    background 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.pcb-button::before {
+  content: "";
+  position: absolute;
+  inset: -0.5rem;
+  z-index: -1;
+  border-radius: calc(var(--radius) + 0.5rem);
+  border: 1px solid hsl(var(--hazard) / 0.35);
+  opacity: 0;
+  transition: opacity 150ms ease;
+}
+
+.pcb-button:hover {
+  transform: translateY(-3px);
+  border-color: hsl(var(--hazard) / 0.5);
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow: 0 22px 60px rgba(15, 23, 42, 0.14);
+}
+
+.pcb-button:hover::before {
+  opacity: 1;
+}
+
+.pcb-button svg {
+  color: hsl(var(--primary));
+}
+
+.pcb-button-projects {
+  left: 4.8%;
+  top: 18.5%;
+}
+
+.pcb-button-contact {
+  right: 4.6%;
+  top: 44.5%;
+}
+
+.pcb-button-resume {
+  left: 5.8%;
+  bottom: 19.5%;
+}
+
+.resume-sheet {
+  max-width: 8.5in;
+  padding: 0.55rem;
+}
+
+.resume-sheet img {
+  border-radius: calc(var(--radius) - 2px);
+  background: #fff;
+  box-shadow: 0 8px 28px rgba(15, 23, 42, 0.1);
+}
+
+@keyframes pcb-pulse-fade {
   0%,
   100% {
-    transform: translate3d(0, 0, 0) rotate(0deg);
+    opacity: 0;
   }
-  50% {
-    transform: translate3d(1.5rem, -1rem, 0) rotate(10deg);
+  15%,
+  75% {
+    opacity: 0.78;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .gear-ring,
-  .gear-orbit {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .pcb-pulse {
     animation: none;
   }
+}
+
+@media (max-width: 767px) {
+  .pcb-home {
+    min-height: auto;
+    padding: 1.25rem;
+  }
+
+  .pcb-home::before,
+  .pcb-traces {
+    display: none;
+  }
+
+  .pcb-chip-card {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 100%;
+    min-height: auto;
+    transform: none;
+    padding: 1.5rem;
+    text-align: left;
+  }
+
+  .pcb-pin {
+    display: none;
+  }
+
+  .pcb-button {
+    position: relative;
+    left: auto;
+    right: auto;
+    top: auto;
+    bottom: auto;
+    width: 100%;
+    margin-top: 0.9rem;
+  }
+}
+
+@media print {
+  @page {
+    size: letter;
+    margin: 0;
+  }
+
+  header,
+  footer,
+  .gear-field,
+  body > div > main > section:not(.resume-print),
+  .print-hide {
+    display: none !important;
+  }
+
+  html,
+  body {
+    width: 8.5in;
+    min-height: 11in;
+    background: #fff !important;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  .resume-print {
+    width: 8.5in !important;
+    max-width: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .resume-print > div {
+    display: block !important;
+  }
+
+  .resume-print aside:first-child {
+    display: none !important;
+  }
+
+  .resume-sheet {
+    width: 8.5in !important;
+    max-width: none !important;
+    height: 11in !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    overflow: hidden !important;
+  }
+
+  .resume-sheet img {
+    width: 8.5in !important;
+    height: 11in !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    object-fit: contain !important;
+  }
+}
+
+/* Dark-mode overrides for the custom PCB homepage surfaces. The base .pcb-*
+   rules use hardcoded light colors, so each themed surface is overridden here. */
+.dark .pcb-field {
+  background:
+    linear-gradient(120deg, rgba(15, 23, 42, 0.32), rgba(2, 6, 23, 0.38)),
+    radial-gradient(circle at 74% 22%, rgba(13, 148, 136, 0.18), transparent 24rem),
+    radial-gradient(circle at 20% 78%, rgba(249, 115, 22, 0.1), transparent 24rem);
+}
+
+.dark .pcb-home {
+  border-color: rgba(148, 163, 184, 0.22);
+  background:
+    linear-gradient(135deg, rgba(30, 41, 59, 0.52), rgba(15, 23, 42, 0.24)),
+    radial-gradient(circle at 50% 44%, rgba(13, 148, 136, 0.14), transparent 22rem);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
+}
+
+.dark .pcb-home::before {
+  border-color: rgba(148, 163, 184, 0.1);
+}
+
+.dark .pcb-chip-card {
+  border-color: rgba(148, 163, 184, 0.22);
+  background: linear-gradient(160deg, rgba(23, 33, 52, 0.5), rgba(10, 16, 28, 0.3));
+  box-shadow:
+    0 26px 80px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(148, 163, 184, 0.16);
+}
+
+.dark .pcb-button {
+  border-color: rgba(148, 163, 184, 0.18);
+  background: rgba(15, 23, 42, 0.58);
+  color: hsl(var(--foreground));
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.5);
+}
+
+.dark .pcb-button:hover {
+  border-color: hsl(var(--hazard) / 0.55);
+  background: rgba(15, 23, 42, 0.78);
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.6);
+}
+
+.dark .pcb-pad {
+  fill: rgba(15, 23, 42, 0.9);
+  stroke: rgba(45, 212, 191, 0.5);
+}
+
+.dark .pcb-trace-faint {
+  stroke: rgba(148, 163, 184, 0.18);
+}
+
+.dark .pcb-pin-top::before,
+.dark .pcb-pin-bottom::before {
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(148, 163, 184, 0.22) 0 0.28rem,
+    transparent 0.28rem 1.95rem
+  );
+}
+
+.dark .pcb-pin-left::before,
+.dark .pcb-pin-right::before {
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(148, 163, 184, 0.22) 0 0.28rem,
+    transparent 0.28rem 1.95rem
+  );
 }
