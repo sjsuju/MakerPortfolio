@@ -101,6 +101,7 @@ This document records the major decisions made so far for the MakerPortfolio pro
 - `InfoForAgent/decisions.md` records durable architectural and product decisions.
 - `InfoForAgent/overview.md` maps files and responsibilities.
 - Any substantial project decision or completed task should update these notes so future models do not rediscover context.
+- Claude/Fable 5 should use project-scoped lean agents in `.claude/agents/` for `code-explorer`, `code-architect`, and `code-reviewer` before using heavier plugin flows. Default to no subagent for small fixes, one focused subagent for medium tasks, and multiple parallel agents only when the user asks for deep or broad analysis.
 
 ## Known Follow-Up Decisions
 

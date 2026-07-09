@@ -42,6 +42,8 @@ export function ThemeToggle() {
       variant="outline"
       size="icon"
       aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+      data-tooltip={isDark ? "Switch to light mode" : "Switch to dark mode"}
+      data-tooltip-end=""
       onClick={toggle}
     >
       {/* Render a stable icon until mounted to avoid hydration mismatch */}

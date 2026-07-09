@@ -94,9 +94,9 @@ export default function ContactPage() {
       <section id="resume" className="resume-print container py-16 md:py-20">
         <div className="grid gap-8 lg:grid-cols-[0.38fr_1.62fr]">
           <aside data-reveal>
-            <div className="glass-panel glass-inverse sticky top-24 rounded-lg p-7 text-white">
+            <div className="glass-panel glass-inverse lg:sticky lg:top-24 rounded-lg p-7 text-foreground">
               <h2 className="text-4xl font-semibold tracking-tight">Resume</h2>
-              <p className="mt-3 text-white/[0.68]">
+              <p className="mt-3 text-muted-foreground">
                 Maker, robotics lead, embedded systems builder, and software developer.
               </p>
               <div className="mt-6">

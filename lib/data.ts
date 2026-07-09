@@ -7,6 +7,7 @@ export const navItems = [
 export const projects = [
   {
     title: "FTC Team 23918 Super Sigma Robotics",
+    slug: "ftc-23918",
     role: "Founder, captain, design lead",
     description:
       "Founded and captained Team 23918, leading mechanical design across intake, sorting, shooter, drivebase, and iteration cycles. The work combined CAD, fabrication, testing discipline, and match strategy under real competition pressure.",
@@ -15,6 +16,7 @@ export const projects = [
   },
   {
     title: "EMG Prosthetic Hand",
+    slug: "emg-prosthetic-hand",
     role: "Embedded systems and mechatronics",
     description:
       "Designed a prosthetic hand architecture around an ESP32, MyoWare EMG sensor, PCA9685 driver, and MG996R servos, with a planned Random Forest gesture classifier for more natural control.",
@@ -23,6 +25,7 @@ export const projects = [
   },
   {
     title: "Veridex Browser Extension",
+    slug: "veridex",
     role: "AI product engineering",
     description:
       "Explored a privacy-minded extension workflow that helps readers summarize long pages, pull cited sources, and inspect claims without turning the browser into a black-box answer machine.",
@@ -31,6 +34,7 @@ export const projects = [
   },
   {
     title: "VibeShuffle / Spotify Tuner",
+    slug: "vibeshuffle",
     role: "Music intelligence experiment",
     description:
       "Prototyped a more expressive way to tune playlists using natural preferences such as energy, texture, mood, familiarity, and listening context instead of only genre labels.",
@@ -39,6 +43,7 @@ export const projects = [
   },
   {
     title: "Portfolio Website",
+    slug: "makerportfolio",
     role: "Full-stack web project",
     description:
       "Built a web development project that connected backend routing, containerized deployment, AWS hosting, and portfolio content into a maintainable personal site foundation.",

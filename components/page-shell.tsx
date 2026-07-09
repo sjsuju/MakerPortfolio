@@ -1,13 +1,14 @@
 import { Footer } from "@/components/footer";
-import { GearField } from "@/components/gear-field";
 import { Navbar } from "@/components/navbar";
 import { RevealManager } from "@/components/reveal-manager";
+import { ScrambleManager } from "@/components/scramble-manager";
 
 export function PageShell({ children }: { children: React.ReactNode }) {
   return (
-    <div className="relative min-h-screen overflow-hidden">
-      <GearField />
+    <div className="relative min-h-screen overflow-x-clip">
+      <div className="gear-field" aria-hidden="true" />
       <RevealManager />
+      <ScrambleManager />
       <Navbar />
       <main className="relative z-10">{children}</main>
       <div className="relative z-10">

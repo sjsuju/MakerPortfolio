@@ -1,5 +1,6 @@
 import { ArrowUpRight, Bot, CpuIcon, Hand, WrenchIcon } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { PageShell } from "@/components/page-shell";
 import { SectionHeading } from "@/components/section-heading";
 import { Timeline } from "@/components/timeline";
@@ -41,7 +42,8 @@ export default function ProjectsPage() {
         />
         <div className="mt-12 grid gap-6">
           {projects.map((project) => (
-            <Card key={project.title} className="overflow-hidden" data-reveal>
+            <Link key={project.title} href={`/projects/${project.slug}`} className="group block">
+            <Card className="overflow-hidden" data-reveal>
               <div className="grid gap-0 lg:grid-cols-[0.82fr_1.18fr]">
                 <div className="relative min-h-64 overflow-hidden">
                   <Image src={project.image} alt="" fill sizes="(min-width: 1024px) 40vw, 100vw" className="object-cover" />
@@ -52,7 +54,7 @@ export default function ProjectsPage() {
                       <p className="text-sm font-semibold text-primary">{project.role}</p>
                       <h2 className="mt-2 text-2xl font-semibold tracking-tight">{project.title}</h2>
                     </div>
-                    <ArrowUpRight className="mt-1 h-5 w-5 text-muted-foreground" />
+                    <ArrowUpRight className="mt-1 h-5 w-5 text-muted-foreground transition-colors group-hover:text-primary" />
                   </div>
                   <p className="mt-5 max-w-3xl leading-7 text-muted-foreground">
                     {project.description}
@@ -65,6 +67,7 @@ export default function ProjectsPage() {
                 </div>
               </div>
             </Card>
+            </Link>
           ))}
         </div>
       </section>

@@ -34,7 +34,8 @@ The latest active card work happened on `codex/cards` after `codex/scrollanimati
 - `components/ui/badge.tsx` was also made more transparent so badges do not look heavier than the cards.
 - Preserve the clear/lens-like direction unless the user asks to return to heavier frosted glass.
 - The scroll charge dot should remain fixed-size/circular on desktop, and the active wire should visually connect through the dot.
-- Gear meshing is still imperfect and intentionally deferred; user said to worry about that later.
+- Gear meshing was fixed by deriving exact phase values (A2=7.71°, A3=18.33°, B2=32.70°, C2=26.05°) in `components/gear-field.tsx`. The earlier C2=6.05° left the C18–C9 pair half a tooth out (cyan 9T tip landing on a gap *edge* rather than seated in the gap); adding half the 9T pitch (20°) fixed it (6.05 → 26.05). A26–A12, A12–A16 and B22–B10 were already correctly interleaved. Correct mesh condition (verified geometrically, not by fraction bookkeeping): where fixed gear A presents a **tooth CENTER** toward B (local tooth-center fraction 0.32 of the angular pitch facing the line-of-centers), driven gear B must present a **GAP CENTER** toward A (gap-center fraction 0.82). Equivalently B's tooth tips must fall into A's gaps — the reliable acceptance test is tip-to-gap screen distance << tip-to-tip distance at the contact point, evaluated on the actual rendered rotations. The old `target_f_b = (f_a + 0.5) mod 1` shortcut has the right *magnitude* (gap 0.82 − tooth 0.32 = 0.50) but mixes plain fractions with the 0.32/0.82 tooth/gap landmarks and can lock onto the wrong half by a full half-pitch (as it did for C). Reusable procedure for repositioning: for driven gear B meshing fixed A (y-down screen coords, degrees), th = atan2(cb.y-ca.y, cb.x-ca.x); p = 360/teeth; choose phase_b so that, at rotation R = phase + scrollY*0.055*(24/teeth)*dir, B's nearest tooth tip lands in A's nearest gap (tooth center local = (i+0.32)p, gap center local = (i+0.82)p, outerR = pitchR + m*0.85, rootR = pitchR − m*1.05). Sweep phase_b over [0, p) and pick the value minimizing tip-to-gap distance; keep result in [0, 360/teeth). Solve pairs in chain order (A12 before A16; re-check the downstream pair after fixing an upstream one). Center distance must equal (teethA+teethB)*module/2 and adjacent gears must counter-rotate.
+- Follow-up: the C-cluster **18T** ("middle-of-the-page" large gear) was itself mis-meshed against the 9T (at scrollY=0, dTG=6.65 vs dTT=13.35 — its engaging tip sat near mid-tooth, not seated in the 9T gap). Fixed by phase-shifting ONLY the 18T: phase 8 → **13.5°** (9T left at 26.05). Re-verified on rendered rotations at scrollY=0: dTG=1.15, dTT=18.85 (cleanly interleaved). Current C-cluster phases: 18T=13.5, 9T=26.05. Note: this 2:1 pair's discrete tooth sampling drifts the metric away from perfect at intermediate scroll positions (affects any phase); solve/verify at scrollY=0. The A-train 12T↔16T pair still shows an inverted residual, but that is the 16T's phase to fix and is out of scope for the single-gear 18T correction.
 
 ### Resume Flow
 
@@ -239,6 +240,7 @@ For visual/layout changes, also run the app locally and inspect the relevant pag
 - The user wants the portfolio to be practical and polished, not bloated.
 - The user asked for a working resume print/download flow instead of placeholder text.
 - The user wants all future models to understand what has already been done, not rediscover it.
+- The user wants Claude/Fable 5 subagents to be token efficient: search first, read targeted ranges, avoid broad multi-agent committees for small frontend polish, and prefer lean project agents in `.claude/agents/`.
 
 ## Git And Workspace Notes
 
@@ -294,3 +296,4 @@ Future models should:
 - Prefer small, direct changes that match the current simplified architecture.
 - Avoid adding new abstractions or dependencies unless they clearly reduce complexity.
 - Preserve the consolidated route decisions unless the user explicitly changes direction.
+- For Claude/Fable 5 sessions, use `.claude/CLAUDE.md` and the lean project agents before reaching for the official feature-dev plugin's heavier multi-agent flow.

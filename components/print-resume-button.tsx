@@ -44,7 +44,7 @@ export function PrintResumeButton() {
         aria-haspopup="menu"
         aria-expanded={open}
         onClick={() => setOpen((value) => !value)}
-        className="w-full justify-between border-white/[0.16] bg-white/[0.08] text-white hover:bg-white/[0.14]"
+        className="w-full justify-between"
       >
         <span className="flex items-center gap-2">
           <Printer className="h-4 w-4" /> Print / Download resume
@@ -55,7 +55,7 @@ export function PrintResumeButton() {
       {open ? (
         <div
           role="menu"
-          className="absolute left-0 right-0 z-20 mt-2 overflow-hidden rounded-lg border border-white/[0.12] bg-slate-900/[0.85] shadow-glow backdrop-blur-xl"
+          className="mt-2 overflow-hidden rounded-lg border border-white/[0.12] bg-slate-900/[0.85] shadow-glow backdrop-blur-xl"
         >
           <button
             type="button"
