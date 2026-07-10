@@ -3,21 +3,23 @@
 @tailwind utilities;
 
 :root {
-  --background: 0 0% 97%;
-  --foreground: 0 0% 12%;
-  --card: 0 0% 100%;
-  --card-foreground: 0 0% 12%;
+  /* Warm haystack light theme. Background is Half Haystack (#E6D3B3),
+     cards are cream (#EFE7DA) so they lift off the background. */
+  --background: 38 50% 80%;
+  --foreground: 30 12% 14%;
+  --card: 39 42% 90%;
+  --card-foreground: 30 12% 14%;
   --primary: 209 100% 36%;
   --primary-foreground: 0 0% 100%;
-  --secondary: 0 0% 91%;
+  --secondary: 38 34% 84%;
   --secondary-foreground: 211 95% 33%;
-  --muted: 0 0% 95%;
-  --muted-foreground: 215 9% 42%;
+  --muted: 38 36% 86%;
+  --muted-foreground: 30 10% 38%;
   --accent: 210 100% 84%;
   --accent-foreground: 211 95% 33%;
-  --hazard: 23 73% 44%;
-  --border: 0 0% 90%;
-  --input: 0 0% 90%;
+  --hazard: 23 73% 40%;
+  --border: 36 28% 72%;
+  --input: 36 28% 74%;
   --ring: 209 100% 36%;
   --radius: 0.5rem;
 }
@@ -85,11 +87,12 @@ h3 {
   content: "";
   position: absolute;
   inset: 0;
+  /* Sepia pencil grid on the haystack vellum (dark mode overrides below). */
   background-image:
-    linear-gradient(rgba(15, 23, 42, 0.055) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(15, 23, 42, 0.055) 1px, transparent 1px),
-    linear-gradient(rgba(15, 23, 42, 0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(15, 23, 42, 0.08) 1px, transparent 1px);
+    linear-gradient(rgba(82, 55, 22, 0.13) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(82, 55, 22, 0.13) 1px, transparent 1px),
+    linear-gradient(rgba(82, 55, 22, 0.2) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(82, 55, 22, 0.2) 1px, transparent 1px);
   background-size:
     32px 32px,
     32px 32px,
@@ -115,13 +118,16 @@ h3 {
     position: relative;
     isolation: isolate;
     overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.34);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    /* Cream (#EFE7DA) fill so cards lift off the haystack background while
+       staying translucent enough for the frosted-glass effect (blurred grid
+       shows through). Dark mode overrides below. */
     background:
-      linear-gradient(145deg, rgba(255, 255, 255, 0.032), rgba(255, 255, 255, 0.006) 52%, transparent);
+      linear-gradient(145deg, rgba(240, 232, 219, 0.6), rgba(238, 231, 218, 0.48) 52%, rgba(236, 229, 216, 0.42));
     backdrop-filter: blur(6px) saturate(1.65) brightness(1.12) contrast(1.01);
     -webkit-backdrop-filter: blur(6px) saturate(1.65) brightness(1.12) contrast(1.01);
     box-shadow:
-      0 22px 66px rgba(11, 21, 36, 0.055),
+      0 22px 66px rgba(84, 58, 24, 0.09),
       inset 0 1px 0 rgba(255, 255, 255, 0.7),
       inset 1px 0 0 rgba(255, 255, 255, 0.28),
       inset 0 -1px 0 rgba(255, 255, 255, 0.16),
@@ -229,7 +235,7 @@ h3 {
   transform: translateY(-3px);
   border-color: hsl(var(--primary) / 0.32);
   box-shadow:
-    0 26px 72px rgba(11, 21, 36, 0.1),
+    0 26px 72px rgba(84, 58, 24, 0.14),
     inset 0 1px 0 rgba(255, 255, 255, 0.68),
     inset 1px 0 0 rgba(255, 255, 255, 0.3);
 }
@@ -243,7 +249,7 @@ h3 {
 }
 
 .glass-bar {
-  background: rgba(255, 255, 255, 0.48);
+  background: rgba(244, 238, 227, 0.62);
   backdrop-filter: blur(24px) saturate(1.55);
   -webkit-backdrop-filter: blur(24px) saturate(1.55);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.64);
