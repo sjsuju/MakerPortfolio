@@ -109,21 +109,24 @@ h3 {
    Glass surfaces: frosted panels over the gear field.
 --------------------------------------------------------------------------- */
 
-.glass-panel {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.34);
-  background:
-    linear-gradient(145deg, rgba(255, 255, 255, 0.032), rgba(255, 255, 255, 0.006) 52%, transparent);
-  backdrop-filter: blur(6px) saturate(1.65) brightness(1.12) contrast(1.01);
-  -webkit-backdrop-filter: blur(6px) saturate(1.65) brightness(1.12) contrast(1.01);
-  box-shadow:
-    0 22px 66px rgba(11, 21, 36, 0.055),
-    inset 0 1px 0 rgba(255, 255, 255, 0.7),
-    inset 1px 0 0 rgba(255, 255, 255, 0.28),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.16),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+/* In the components layer so Tailwind utilities (fixed, overflow-visible, ...) can override. */
+@layer components {
+  .glass-panel {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.34);
+    background:
+      linear-gradient(145deg, rgba(255, 255, 255, 0.032), rgba(255, 255, 255, 0.006) 52%, transparent);
+    backdrop-filter: blur(6px) saturate(1.65) brightness(1.12) contrast(1.01);
+    -webkit-backdrop-filter: blur(6px) saturate(1.65) brightness(1.12) contrast(1.01);
+    box-shadow:
+      0 22px 66px rgba(11, 21, 36, 0.055),
+      inset 0 1px 0 rgba(255, 255, 255, 0.7),
+      inset 1px 0 0 rgba(255, 255, 255, 0.28),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.16),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  }
 }
 
 .glass-panel::before {
@@ -262,9 +265,12 @@ a:focus-visible {
   border-radius: calc(var(--radius) - 3px);
 }
 
-/* CSS tooltip: content from data-tooltip. aria-label stays the source of truth. */
-[data-tooltip] {
-  position: relative;
+/* CSS tooltip: content from data-tooltip. aria-label stays the source of truth.
+   In the components layer so position utilities (fixed, ...) win on the trigger. */
+@layer components {
+  [data-tooltip] {
+    position: relative;
+  }
 }
 
 [data-tooltip]::after {
@@ -297,6 +303,13 @@ a:focus-visible {
   left: auto;
   right: 0;
   transform: translate(0, 3px);
+}
+
+/* Top-anchor variant for triggers near the bottom edge (e.g. floating terminal button). */
+[data-tooltip][data-tooltip-top]::after {
+  top: auto;
+  bottom: calc(100% + 0.5rem);
+  transform: translate(-50%, -3px);
 }
 
 [data-tooltip]:hover::after,

@@ -1,24 +1,25 @@
 import Link from "next/link";
-import Image from "next/image";
-import { Suspense } from "react";
+// Resume section disabled 2026-07-09 (privacy). Uncomment the marked blocks to restore.
+// import Image from "next/image";
+// import { Suspense } from "react";
 import { ArrowUpRight, Mail } from "lucide-react";
 import { PageShell } from "@/components/page-shell";
-import { PrintResumeButton } from "@/components/print-resume-button";
-import { PrintResumeHandler } from "@/components/print-resume-handler";
+// import { PrintResumeButton } from "@/components/print-resume-button";
+// import { PrintResumeHandler } from "@/components/print-resume-handler";
 import { SectionHeading } from "@/components/section-heading";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { contactLinks } from "@/lib/data";
 
-const RESUME_IMAGE_WIDTH = 2550;
-const RESUME_IMAGE_HEIGHT = 3300;
+// const RESUME_IMAGE_WIDTH = 2550;
+// const RESUME_IMAGE_HEIGHT = 3300;
 
 export default function ContactPage() {
   return (
     <PageShell>
-      <Suspense fallback={null}>
+      {/* <Suspense fallback={null}>
         <PrintResumeHandler />
-      </Suspense>
+      </Suspense> */}
       <section className="container py-16 md:py-20">
         <SectionHeading
           eyebrow="About"
@@ -91,6 +92,7 @@ export default function ContactPage() {
         </div>
       </section>
 
+      {/* Resume section disabled 2026-07-09 (privacy). Uncomment to restore.
       <section id="resume" className="resume-print container py-16 md:py-20">
         <div className="grid gap-8 lg:grid-cols-[0.38fr_1.62fr]">
           <aside data-reveal>
@@ -119,6 +121,7 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
+      */}
     </PageShell>
   );
 }

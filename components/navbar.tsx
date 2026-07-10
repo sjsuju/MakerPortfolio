@@ -81,6 +81,8 @@ export function Navbar() {
             size="icon"
             className="lg:hidden"
             aria-label={open ? "Close menu" : "Open menu"}
+            data-tooltip={open ? "Close menu" : "Open menu"}
+            data-tooltip-end=""
             onClick={() => setOpen((value) => !value)}
           >
             {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
@@ -107,6 +109,8 @@ export function Navbar() {
                     <button
                       type="button"
                       aria-label={projectsOpen ? "Hide projects" : "Show projects"}
+                      data-tooltip={projectsOpen ? "Hide projects" : "Show projects"}
+                      data-tooltip-end=""
                       aria-expanded={projectsOpen}
                       onClick={() => setProjectsOpen((value) => !value)}
                       className="rounded-md p-3 text-muted-foreground hover:text-foreground"

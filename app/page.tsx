@@ -1,5 +1,6 @@
 import { PageShell } from "@/components/page-shell";
 import { HeroCenterpiece } from "@/components/hero-centerpiece";
+import { HeroTerminal } from "@/components/hero-terminal";
 
 export default function Home() {
   return (
@@ -24,6 +25,9 @@ export default function Home() {
             <p className="mt-5 max-w-xl text-base leading-7 text-muted-foreground md:text-lg">
               Robotics, assistive tech, AI tools, embedded systems, and web builds.
             </p>
+            <div className="mt-6">
+              <HeroTerminal />
+            </div>
           </div>
 
           <div className="mx-auto w-full max-w-[340px] md:mx-0 md:max-w-[600px] md:justify-self-end">

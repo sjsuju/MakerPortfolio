@@ -44,7 +44,6 @@ in an effect.
 - Commands (case-insensitive, trimmed):
   - `help`: lists commands
   - `projects`: router.push `/projects`
-  - `resume`: router.push `/contact#resume`
   - `contact`: router.push `/contact`
   - `whoami`: fun one-liner
   - `clear`: clears scrollback
