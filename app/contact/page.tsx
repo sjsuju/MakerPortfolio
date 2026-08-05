@@ -24,22 +24,24 @@ export default function ContactPage() {
         <SectionHeading
           eyebrow="About"
           title="I build to understand systems"
-          text="My favorite projects combine physical constraints with software leverage: a robot mechanism that needs to score reliably, a prosthetic hand that needs cleaner control, or a browser assistant that needs to earn trust."
+          text="The projects I like best sit where a physical constraint meets a software problem. A mechanism that has to score under match pressure, a prosthetic hand that needs cleaner control, a browser tool that has to earn its way into how someone reads."
         />
         <div className="mt-12 grid gap-6 lg:grid-cols-[1.08fr_0.92fr]">
           <Card className="p-7" data-reveal>
             <h2 className="text-2xl font-semibold">What I care about</h2>
             <div className="mt-5 space-y-4 leading-7 text-muted-foreground">
               <p>
-                I am drawn to projects that make thinking visible: CAD iterations,
-                wiring choices, classifier plans, interface decisions, and the notes
-                that explain why one version replaced another.
+                I like projects where the thinking stays visible. CAD iterations, wiring
+                choices, the notes explaining why one version replaced another. Most of
+                what I have learned came out of the versions that did not work.
               </p>
               <p>
-                Robotics taught me to respect deadlines and field reality. Assistive
-                tech taught me that cost, comfort, and reliability are engineering
-                requirements, not afterthoughts. Web and AI tools taught me to design
-                for people who want clarity, not noise.
+                Robotics taught me to respect deadlines and to trust what happens on the
+                field over what happens in CAD. Assistive tech is where I learned that
+                cost and comfort decide whether a device gets used at all, which makes
+                them engineering problems rather than details to sort out later. Building
+                web and AI tools has mostly taught me how quickly a confident interface
+                can talk someone out of checking its work.
               </p>
             </div>
           </Card>
@@ -59,8 +61,8 @@ export default function ContactPage() {
         <div className="container">
           <SectionHeading
             eyebrow="Contact"
-            title="Open to internships, research, teams, and build conversations"
-            text="The fastest way to reach me is email. I am especially interested in robotics, assistive technology, embedded systems, AI tooling, and product engineering."
+            title="Open to internships, research, and teams that build things"
+            text="Email is the fastest way to reach me. I am most interested in robotics, assistive technology, embedded systems, and AI tooling, but I will happily talk about anything someone is actually building."
           />
           <div className="mx-auto mt-12 grid max-w-4xl gap-5 md:grid-cols-3">
             {contactLinks.map((link) => (

@@ -28,33 +28,33 @@ const HELP_ENTRIES: [string, string][] = [
 // Each string is one paragraph; the output area wraps text naturally.
 const INFO_COMMANDS: Record<string, string[]> = {
   whoami: [
-    "sooraj sathyajith. maker, robotics team founder and captain, embedded systems builder, and software developer. permanently soldering something.",
+    "sooraj sathyajith. i founded and captain an FTC robotics team, build embedded systems, and write software. usually in the middle of soldering something.",
   ],
   whyexist: [
-    "this site is my workbench in public. most portfolios show polished results; this one also shows the iteration behind them: what i designed, what failed, and how each version got better.",
-    "it is also a build in itself: next.js, a hand-rolled 3d wireframe gear, and the terminal you are typing into right now.",
-    "use the nav above to see the actual projects.",
+    "this site is my workbench, left open. most portfolios show you the finished version. i wanted somewhere to also show the revisions, including the ones that did not work.",
+    "it is a build in its own right too: next.js, a 3d wireframe gear i wrote from scratch, and whatever this is that you are typing into.",
+    "the nav above has the actual projects.",
   ],
   robotics: [
     "i founded FIRST Tech Challenge team 23918 in 2023 and have captained it every season since. we have been competitive every single year.",
     "in the DECODE season we won the coveted first place Inspire Award at both the regional and state levels, advancing to the FIRST Championship as Oregon's #1 placed team.",
-    "my work on the team spans CAD, mechanism design, fabrication, failure analysis, and quick redesign loops, all under competition deadlines and field reality.",
+    "my part is mostly CAD, mechanism design, and fabrication, plus working out why the thing that ran fine yesterday does not run on the field today.",
   ],
   assistive: [
-    "i build assistive hardware, most notably an EMG prosthetic hand that reads muscle activation signals so control feels intuitive instead of mechanical.",
-    "the goal is shifting control away from traditional input methods toward interfaces anyone can use. cost, comfort, and reliability are engineering requirements here, not afterthoughts.",
+    "mostly an EMG prosthetic hand that reads muscle activation off the forearm, so you control it by trying to close your hand rather than by operating a switch.",
+    "the constraints i keep coming back to are cost and comfort. a device nobody can afford or wants to wear does not help anyone, which makes those engineering problems and not details for later.",
   ],
   aiandml: [
-    "i use AI where it earns trust. on the hardware side, that means classifying EMG activation patterns to drive prosthetic control. on the software side, it means Veridex, a browser assistant designed for clearer reading instead of noise.",
-    "i care about AI tools that make thinking visible: classifier plans, interface decisions, and the notes that explain why one version replaced another.",
+    "on the hardware side, classifying EMG activation patterns to drive that prosthetic hand. on the software side, Veridex, a browser assistant that reads long pages and shows you what it based its summary on.",
+    "the AI work i like is the kind you can check. a classifier with visible confidence, a summary that points at its sources.",
   ],
   embedded: [
-    "ESP32 prototyping, sensor integration, PWM driver control, and bench validation. this is the physical layer under every project i build.",
-    "embedded work taught me that hardware is never the ideal on paper: real clocks drift, real sensors read off, and calibration is part of the design.",
+    "ESP32 prototyping, sensor integration, PWM driver control, bench validation. this sits underneath most of what i build.",
+    "the thing embedded work keeps teaching me is that hardware never matches the datasheet. clocks drift, sensors read off, and you have to leave yourself somewhere to calibrate.",
   ],
   web: [
-    "next.js and react builds like this site, VibeShuffle for filtering music by feel instead of genre, and SoleLedger, a resale tracker on FastAPI and postgres that does honest decimal math instead of automating checkouts.",
-    "web work is where the projects meet people, so everything is designed for visitors who want clarity, not noise.",
+    "next.js and react builds like this site, VibeShuffle for filtering music by feel rather than genre, and SoleLedger, a resale tracker on FastAPI and postgres that does careful decimal math and deliberately does not automate checkouts.",
+    "web is where the rest of the work turns into something you can actually hand to a person.",
   ],
 };
 

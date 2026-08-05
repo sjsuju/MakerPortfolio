@@ -11,12 +11,12 @@ import { projects } from "@/lib/data";
 const makerAreas = [
   {
     title: "Robotics mechanisms",
-    text: "Designing and building mechanical systems for FIRST Tech Challenge. A showcase of engineering creativity, iteration, and problem-solving.",
+    text: "Mechanical systems for FIRST Tech Challenge: intake, sorting, shooter, and drivebase, designed in CAD and then fixed repeatedly once the field disagreed.",
     icon: Bot
   },
   {
     title: "Assistive hardware",
-    text: "Using EMG sensors and activation patterns assisted by AI classification to shift control from traditional input methods to more intuitive and accessible interfaces.",
+    text: "EMG sensors and a classifier that reads muscle activation, so a hand can be controlled by trying to move it instead of by pressing something.",
     icon: Hand
   },
   {
@@ -38,7 +38,7 @@ export default function ProjectsPage() {
         <SectionHeading
           eyebrow="Projects"
           title="Technical builds and product experiments"
-          text="Each project started with a real constraint: competition performance, accessible hardware, better reading workflows, more human music filtering, or reliable deployment."
+          text="Every one of these started from a constraint I ran into rather than an idea I wanted to try. A robot that had to score reliably, a hand that had to be affordable, a reading tool I wanted to trust."
         />
         <div className="mt-12 grid gap-6">
           {projects.map((project) => (
@@ -76,7 +76,7 @@ export default function ProjectsPage() {
           <SectionHeading
             eyebrow="Maker Portfolio"
             title="Mechanisms, electronics, and iteration"
-            text="The hands-on thread behind the projects: what was designed, what failed, what improved, and how each prototype moved closer to a useful system."
+            text="The hands-on work sitting under the projects above: what got designed, what broke, and what the next revision did about it."
           />
           <div className="mt-12 grid gap-5 md:grid-cols-2">
             {makerAreas.map((area) => {
@@ -104,7 +104,7 @@ export default function ProjectsPage() {
               Timeline
             </p>
             <h2 className="mt-3 text-3xl font-semibold tracking-tight">
-              Key moments in the maker path
+              How I got here
             </h2>
           </div>
           <Timeline />

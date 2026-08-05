@@ -19,7 +19,7 @@ export const projects = [
     slug: "emg-prosthetic-hand",
     role: "Embedded systems and machine learning",
     description:
-      "A five finger prosthetic hand driven by forearm muscle signals. Two MyoWare 2.0 sensors feed an Arduino Nano ESP32 at 100 Hz, a Random Forest sorts each window into clamp, point, or open, and a PCA9685 drives the servos only once the prediction has held steady.",
+      "A five finger prosthetic hand driven by forearm muscle signals. Two MyoWare sensors feed an Arduino Nano ESP32 at 100 Hz, a Random Forest sorts each second of signal into open, clamp, or point at 96% accuracy held out by recording, and a PCA9685 moves the servos only once the prediction has held steady.",
     image: "/placeholders/prosthetic.svg",
     tags: ["ESP32", "EMG", "Random Forest", "Assistive Tech"]
   },
@@ -28,7 +28,7 @@ export const projects = [
     slug: "buddy-ai",
     role: "Desktop AI product engineering",
     description:
-      "A floating AI companion for Windows 11, built in Electron. A small expressive face expands into a full assistant with chat, media and system control, consent-gated screen vision, and MCP tool integrations, designed so routine commands never cost a token and every capability sits behind an explicit permission.",
+      "A floating AI companion for Windows 11, built in Electron. A small expressive face expands into an assistant with chat, media and system control, screen vision that asks permission every time, and MCP tool integrations. Routine commands like play or volume run locally and never reach the API.",
     image: "/projects/buddy.png",
     tags: ["Electron", "AI Agents", "MCP", "Windows"]
   },
@@ -37,7 +37,7 @@ export const projects = [
     slug: "veridex",
     role: "AI product engineering",
     description:
-      "A reading assistant that shows its evidence instead of asking for trust. Veridex summarizes long pages, pulls out the sources they cite, and flags weak or promotional claims, running the model locally through Ollama so the page you are reading never leaves your machine.",
+      "A reading assistant built to show its work. Veridex summarizes long pages, pulls out the sources they cite, and points at claims that look weak or promotional. The model runs locally through Ollama, so the page you are reading never leaves your machine.",
     image: "/placeholders/veridex.svg",
     tags: ["Browser Extension", "Local AI", "Manifest V3", "Research"]
   },
@@ -55,7 +55,7 @@ export const projects = [
     slug: "soleledger",
     role: "Full-stack product engineering",
     description:
-      "A sneaker resale tracker built around honest math rather than bots. It follows a pair from purchase to payout in fixed-precision decimals, and a deterministic pricing agent reprices listings against StockX market data behind a floor it is not allowed to cross. Every buying decision stays in human hands.",
+      "A sneaker resale tracker for the part nobody automates: whether you actually made money. It follows a pair from purchase to payout in fixed-precision decimals, and a pricing agent reprices listings against StockX data without ever going below a floor that guarantees your margin. Buying decisions stay with you.",
     image: "/placeholders/soleledger.svg",
     tags: ["FastAPI", "Next.js", "PostgreSQL", "StockX API"]
   },
@@ -64,7 +64,7 @@ export const projects = [
     slug: "makerportfolio",
     role: "Full-stack web project",
     description:
-      "This site. It began as a containerized Flask app on AWS and became a Next.js rebuild with a hand-rolled 3D gear you can drag, a working terminal in the hero, and a warm drafting-table theme layered under frosted glass panels.",
+      "This site. It started as a containerized Flask app on AWS and got rebuilt in Next.js, picking up a 3D gear you can drag, a terminal that answers questions about my work, and a warm drafting-table theme sitting under frosted glass panels.",
     image: "/placeholders/portfolio.svg",
     tags: ["Next.js", "TypeScript", "Canvas", "Design"]
   }
@@ -74,22 +74,22 @@ export const timeline = [
   {
     year: "2023",
     title: "Founded Super Sigma Robotics",
-    text: "Organized the team, set the technical direction, and began rapid robot iteration."
+    text: "Put the team together, set its technical direction, and started building robots on a competition clock."
   },
   {
     year: "2025",
     title: "Founded the Curious Neurons Foundation",
-    text: "A non-profit organization dedicated to improving access to technology and education for underprivileged communities. Encompasses Super Sigma Robotics and other initiatives dedicated to bringing STEM for all."
+    text: "A non-profit working on access to technology and education for underprivileged communities. Super Sigma Robotics sits under it, along with other STEM outreach work."
   },
   {
     year: "2026",
     title: "Qualified for FTC World Championship",
-    text: "Led design and competition execution through high-pressure regional and championship cycles."
+    text: "Won first place Inspire Award at regionals and states, and advanced as Oregon's top placed team."
   },
   {
     year: "2026",
     title: "Expanded into assistive tech and AI tools",
-    text: "Started building EMG prosthetics, browser AI workflows, and recommendation systems."
+    text: "Started the EMG prosthetic hand, then browser AI and recommendation work alongside it."
   }
 ];
 
