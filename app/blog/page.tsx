@@ -12,9 +12,9 @@ export const metadata: Metadata = {
 // Topics I plan to write about first. Replace this section with the post list
 // once there are posts.
 const upcoming = [
-  "Why the EMG hand refuses to move until it is sure",
-  "What a 99% accuracy score was actually hiding",
-  "Building a 3D gear on a canvas with no libraries"
+  "The RAM crisis and what it is doing to the cost of building anything",
+  "Where the chip market goes from here",
+  "How close the current push toward AGI actually is"
 ];
 
 export default function BlogPage() {
@@ -23,8 +23,8 @@ export default function BlogPage() {
       <section className="container py-16 md:py-20">
         <SectionHeading
           eyebrow="Blog"
-          title="Notes from the workbench"
-          text="Longer writing about the things I build. Mostly the parts that did not work the first time, since those are the ones worth explaining."
+          title="Notes on hardware and AI"
+          text="Writing about the hardware market and where AI is heading. I buy these parts for my own builds, so when memory prices climb or supply tightens, it shows up directly in what I can afford to prototype with."
         />
 
         <div className="mx-auto mt-12 max-w-2xl">
@@ -51,10 +51,10 @@ export default function BlogPage() {
             <p className="mt-6 text-sm leading-7 text-muted-foreground">
               In the meantime, the{" "}
               <Link href="/projects" className="text-primary hover:underline">
-                project write-ups
+                projects page
               </Link>{" "}
-              cover most of the same ground in more detail. If you want to know when
-              something goes up, or you want me to write about a specific one,{" "}
+              is where the actual building happens. If you want to know when something
+              goes up, or there is a topic you think I should take on,{" "}
               <Link
                 href="mailto:soorajjsathyajith@gmail.com"
                 className="inline-flex items-center gap-1 text-primary hover:underline"
