@@ -10,45 +10,63 @@ export const projects = [
     slug: "ftc-23918",
     role: "Founder, captain, design lead",
     description:
-      "Founded and captained Team 23918, leading mechanical design across intake, sorting, shooter, drivebase, and iteration cycles. The work combined CAD, fabrication, testing discipline, and match strategy under real competition pressure.",
+      "Founded Team 23918 in 2023 and have captained it every season since, leading mechanical design across intake, sorting, shooter, and drivebase. In the DECODE season the team won first place Inspire Award at both the regional and state levels, advancing to the FIRST Championship as Oregon's #1 placed team.",
     image: "/placeholders/robotics.svg",
     tags: ["FTC", "CAD", "Robotics", "Leadership"]
   },
   {
     title: "EMG Prosthetic Hand",
     slug: "emg-prosthetic-hand",
-    role: "Embedded systems and mechatronics",
+    role: "Embedded systems and machine learning",
     description:
-      "Designed a prosthetic hand architecture around an ESP32, MyoWare EMG sensor, PCA9685 driver, and MG996R servos, with a planned Random Forest gesture classifier for more natural control.",
+      "A five finger prosthetic hand driven by forearm muscle signals. Two MyoWare 2.0 sensors feed an Arduino Nano ESP32 at 100 Hz, a Random Forest sorts each window into clamp, point, or open, and a PCA9685 drives the servos only once the prediction has held steady.",
     image: "/placeholders/prosthetic.svg",
-    tags: ["ESP32", "EMG", "Servos", "ML"]
+    tags: ["ESP32", "EMG", "Random Forest", "Assistive Tech"]
+  },
+  {
+    title: "Buddy AI Assistant",
+    slug: "buddy-ai",
+    role: "Desktop AI product engineering",
+    description:
+      "A floating AI companion for Windows 11, built in Electron. A small expressive face expands into a full assistant with chat, media and system control, consent-gated screen vision, and MCP tool integrations, designed so routine commands never cost a token and every capability sits behind an explicit permission.",
+    image: "/projects/buddy.png",
+    tags: ["Electron", "AI Agents", "MCP", "Windows"]
   },
   {
     title: "Veridex Browser Extension",
     slug: "veridex",
     role: "AI product engineering",
     description:
-      "Explored a privacy-minded extension workflow that helps readers summarize long pages, pull cited sources, and inspect claims without turning the browser into a black-box answer machine.",
+      "A reading assistant that shows its evidence instead of asking for trust. Veridex summarizes long pages, pulls out the sources they cite, and flags weak or promotional claims, running the model locally through Ollama so the page you are reading never leaves your machine.",
     image: "/placeholders/veridex.svg",
-    tags: ["Browser Extension", "Local AI", "UX", "Research"]
+    tags: ["Browser Extension", "Local AI", "Manifest V3", "Research"]
   },
   {
     title: "VibeShuffle / Spotify Tuner",
     slug: "vibeshuffle",
     role: "Music intelligence experiment",
     description:
-      "Prototyped a more expressive way to tune playlists using natural preferences such as energy, texture, mood, familiarity, and listening context instead of only genre labels.",
+      "A Spotify app that reranks a playlist against a phrase like \"rainy night drive\" instead of a genre label. A model trained offline on 114,000 tracks turns everyday words into audio-feature profiles, then scores every track against them and can write the result back as a new playlist.",
     image: "/placeholders/music.svg",
-    tags: ["Spotify", "Recommendations", "Product", "Data"]
+    tags: ["Flask", "React", "Recommendations", "Data"]
+  },
+  {
+    title: "SoleLedger Resale Tracker",
+    slug: "soleledger",
+    role: "Full-stack product engineering",
+    description:
+      "A sneaker resale tracker built around honest math rather than bots. It follows a pair from purchase to payout in fixed-precision decimals, and a deterministic pricing agent reprices listings against StockX market data behind a floor it is not allowed to cross. Every buying decision stays in human hands.",
+    image: "/placeholders/soleledger.svg",
+    tags: ["FastAPI", "Next.js", "PostgreSQL", "StockX API"]
   },
   {
     title: "Portfolio Website",
     slug: "makerportfolio",
     role: "Full-stack web project",
     description:
-      "Built a web development project that connected backend routing, containerized deployment, AWS hosting, and portfolio content into a maintainable personal site foundation.",
+      "This site. It began as a containerized Flask app on AWS and became a Next.js rebuild with a hand-rolled 3D gear you can drag, a working terminal in the hero, and a warm drafting-table theme layered under frosted glass panels.",
     image: "/placeholders/portfolio.svg",
-    tags: ["Flask", "Docker", "AWS", "Web"]
+    tags: ["Next.js", "TypeScript", "Canvas", "Design"]
   }
 ];
 

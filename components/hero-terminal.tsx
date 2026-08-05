@@ -1,19 +1,16 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Minus, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { projects } from "@/lib/data";
 
-type Mode = "docked" | "popout" | "collapsed";
-
-const MODE_KEY = "hero-terminal-mode";
 const BOOT_KEY = "hero-terminal-booted";
 const MAX_LINES = 40;
 
 const BOOT_LINES = [
   "> boot sequence initiated",
   "> loading maker profile... ok",
-  "> 5 projects indexed",
+  `> ${projects.length} projects indexed`,
   '> type "help" for commands',
 ];
 
@@ -56,58 +53,33 @@ const INFO_COMMANDS: Record<string, string[]> = {
     "embedded work taught me that hardware is never the ideal on paper: real clocks drift, real sensors read off, and calibration is part of the design.",
   ],
   web: [
-    "next.js builds like this site and VibeShuffle, a more human way to filter music on top of Spotify.",
+    "next.js and react builds like this site, VibeShuffle for filtering music by feel instead of genre, and SoleLedger, a resale tracker on FastAPI and postgres that does honest decimal math instead of automating checkouts.",
     "web work is where the projects meet people, so everything is designed for visitors who want clarity, not noise.",
   ],
 };
 
 type Line = { text: string; tone?: "prompt" | "output"; cmd?: string };
 
-const isDesktop = () =>
-  typeof window !== "undefined" && window.matchMedia("(min-width: 768px)").matches;
-
 /**
- * Mini interactive terminal for the home hero. Docks in the hero left column
- * on desktop, collapses to a floating button on mobile (and on request).
- * Info commands only; the nav handles routing.
+ * Mini interactive terminal for the home hero. Always docked in place;
+ * info commands only, the nav handles routing.
  * Glass-themed, mono font, zero new dependencies.
  */
 export function HeroTerminal() {
-  const [mode, setMode] = useState<Mode>("collapsed");
-  const [hydrated, setHydrated] = useState(false);
   const [lines, setLines] = useState<Line[]>([]);
   const [input, setInput] = useState("");
   const [booting, setBooting] = useState(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
-  const collapsedBtnRef = useRef<HTMLButtonElement>(null);
   const outputRef = useRef<HTMLDivElement>(null);
   const bootTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  // Apply the persisted mode after mount, once, to avoid hydration mismatch.
-  useEffect(() => {
-    const desktop = isDesktop();
-    const stored = sessionStorage.getItem(MODE_KEY) as Mode | null;
-    if (stored && (desktop || stored !== "docked")) {
-      setMode(stored);
-    } else {
-      setMode(desktop ? "docked" : "collapsed");
-    }
-    setHydrated(true);
-  }, []);
-
-  useEffect(() => {
-    if (!hydrated) return;
-    sessionStorage.setItem(MODE_KEY, mode);
-  }, [mode, hydrated]);
 
   const append = (newLines: Line[]) => {
     setLines((prev) => [...prev, ...newLines].slice(-MAX_LINES));
   };
 
-  // Boot sequence, once per session, on first expand.
+  // Boot sequence, once per session, on mount.
   useEffect(() => {
-    if (!hydrated || mode === "collapsed") return;
     if (sessionStorage.getItem(BOOT_KEY)) return;
     sessionStorage.setItem(BOOT_KEY, "1");
 
@@ -133,28 +105,7 @@ export function HeroTerminal() {
     return () => {
       if (bootTimerRef.current) clearTimeout(bootTimerRef.current);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [hydrated, mode]);
-
-  // Focus management: input on expand, floating button on collapse.
-  useEffect(() => {
-    if (!hydrated) return;
-    if (mode === "collapsed") {
-      collapsedBtnRef.current?.focus();
-    } else {
-      inputRef.current?.focus();
-    }
-  }, [mode, hydrated]);
-
-  // Escape collapses popout / mobile sheet.
-  useEffect(() => {
-    if (mode === "collapsed") return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setMode("collapsed");
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [mode]);
+  }, []);
 
   useEffect(() => {
     if (outputRef.current) {
@@ -189,56 +140,16 @@ export function HeroTerminal() {
     runCommand(value);
   };
 
-  if (mode === "collapsed") {
-    return (
-      <div
-        className="print-hide fixed bottom-6 left-6 z-40"
-        data-tooltip="Open terminal"
-        data-tooltip-top=""
-      >
-        <button
-          ref={collapsedBtnRef}
-          type="button"
-          aria-label="Open terminal"
-          aria-expanded={false}
-          onClick={() => setMode("popout")}
-          className="glass-panel flex h-12 w-12 items-center justify-center rounded-full font-mono text-sm text-primary shadow-glow"
-        >
-          {">_"}
-        </button>
-      </div>
-    );
-  }
-
-  const isSheet = mode === "popout" && !isDesktop();
-
-  const panel = (
+  return (
     <div
       role="region"
       aria-label="Interactive terminal"
-      className={cn(
-        "glass-panel flex flex-col overflow-hidden rounded-lg",
-        mode === "docked" && "h-80 w-full",
-        mode === "popout" && !isSheet && "fixed bottom-6 right-6 z-40 h-96 w-[420px] max-w-[90vw] print-hide",
-        isSheet && "fixed inset-x-0 bottom-0 z-40 h-[70vh] max-h-[28rem] rounded-b-none print-hide"
-      )}
+      className="glass-panel print-hide flex h-80 w-full flex-col overflow-hidden rounded-lg"
     >
-      <div className="flex shrink-0 items-center justify-between border-b border-white/30 px-3 py-2 dark:border-white/10">
+      <div className="flex shrink-0 items-center border-b border-white/30 px-3 py-2 dark:border-white/10">
         <span className="font-mono text-[0.65rem] uppercase tracking-[0.2em] text-muted-foreground">
           terminal
         </span>
-        <div className="flex items-center gap-1">
-          <button
-            type="button"
-            aria-label="Collapse terminal"
-            data-tooltip="Collapse terminal"
-            data-tooltip-end=""
-            onClick={() => setMode("collapsed")}
-            className="rounded p-1 text-muted-foreground hover:text-foreground"
-          >
-            {mode === "docked" ? <Minus className="h-3.5 w-3.5" /> : <X className="h-3.5 w-3.5" />}
-          </button>
-        </div>
       </div>
 
       <div
@@ -287,6 +198,4 @@ export function HeroTerminal() {
       </form>
     </div>
   );
-
-  return panel;
 }
