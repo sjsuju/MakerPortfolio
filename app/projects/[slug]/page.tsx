@@ -39,13 +39,46 @@ function CodeWindow({ file, code }: { file: string; code: string }) {
 
 // Rich write-ups keyed by slug. Slugs missing here render an honest "coming soon" skeleton.
 const content: Record<string, Section[]> = {
+  "ftc-23918": [
+    {
+      heading: "Why did I build this?",
+      paragraphs: [
+        "I did not join a robotics team, I started one, in 2023, because I wanted a platform for myself and for about ten other kids who had never touched robotics before. I have been the founder, captain, and design lead every season since.",
+        "It was never just a competition to me. It was a way to bring STEM into my own community on my own terms, with more freedom over what we built and how we built it than joining an existing team would have given me. I wanted to take my own thinking and put it into something bigger than myself.",
+        "The team now sits under the Curious Neurons Foundation, a non-profit I founded in 2025 for access to technology and education in underprivileged communities. The robotics program was the first piece of that, not a side effect of it."
+      ]
+    },
+    {
+      heading: "Design across the whole robot",
+      paragraphs: [
+        "Leading a robot end to end means the same person who drew the intake in CAD is also the one redesigning it in the pit twenty minutes before the next match. Across intake, sorting, shooter, and drivebase, most seasons have looked like the same loop: design something that should work, watch the field prove it wrong, and fix it fast enough that the next match is better than the last.",
+        "Running that loop with a team of first-timers means the redesign has to be explainable, not just correct. If only I understand why a change worked, the team has not actually learned anything from it."
+      ]
+    },
+    {
+      heading: "From a regional Inspire Award to the World Championship",
+      paragraphs: [
+        "In the DECODE season we won the Inspire Award, FTC's top honor, at both the regional and state levels, and advanced to the FIRST Championship as Oregon's top-placed team.",
+        "Inspire is not a build award. It is judged on the whole program: engineering practice, outreach, and how well the team can explain its own thinking, which is the part I actually care most about proving."
+      ]
+    }
+  ],
   "emg-prosthetic-hand": [
+    {
+      heading: "Why did I build this?",
+      paragraphs: [
+        "In seventh grade I shattered my right wrist, my dominant hand, badly enough that for a while I effectively did not have a working hand. It got me thinking about the people who do not have one at all, and how good the prosthetics available to them actually are.",
+        "The research was worse than I expected. Something like 100 million people worldwide need a prosthetic limb, and by most estimates around 80 percent of them do not get access to an advanced one. A lot of the people who do get a device end up abandoning it anyway, because it is not intuitive, does not give them much dexterity, or it is just too expensive. So the target was never just \"a prosthetic hand.\" It was one that is smart, cheap, and runs its inference locally instead of depending on infrastructure a lot of the people who need it do not have.",
+        "I brought in two of my closest friends to build it with me. Prathamesh Kulkarni led the hardware, Misha Arturov owned implementation and testing, and I led the ML side and the outreach.",
+        "The activation-pattern idea came directly out of the abandonment problem. Instead of wiring one sensor to one motion, the model reads the whole array as a pattern, so dexterity scales with however much residual muscle someone actually has left, anywhere on the body. There is a real cost: more sensors means a sharper learning curve for the user. But everyone we tested it on could do more with it than with a traditional prosthetic, and learned to do it faster.",
+        "Long term I want to open source the whole thing once we have a big enough dataset to properly tune the self-adjusting thresholds and feedback loops. Every part is designed to be 3D printed individually, so a broken finger gets reprinted and swapped instead of the whole hand getting shipped off for weeks of repair."
+      ]
+    },
     {
       heading: "Reading the muscle directly",
       paragraphs: [
         "Cheap prosthetic hands are usually driven by a switch, an app, or a shoulder harness. All of those ask you to operate the hand. The signal you actually want is already sitting in the forearm: every time someone tries to close their hand, the muscle fires, whether or not the hand is there to respond.",
-        "So the hand reads that signal. MyoWare 2.0 sensors sit on the forearm, an Arduino Nano ESP32 samples them, a Random Forest works out which gesture the muscle is making, and a PCA9685 drives five servos that pull the fingers through tendon strings. The whole prototype came to $213.61 in parts. A commercial myoelectric hand starts around $20,000, so the interesting question is not whether we matched one, it is how much of the function survives at one percent of the cost.",
-        "I spearheaded the project and led the ML side and the outreach. Prathamesh Kulkarni built most of the hardware, and Misha Arturov handled implementation and testing. Both are close friends of mine, and the thing does not exist without either of them."
+        "So the hand reads that signal. MyoWare 2.0 sensors sit on the forearm, an Arduino Nano ESP32 samples them, a Random Forest works out which gesture the muscle is making, and a PCA9685 drives five servos that pull the fingers through tendon strings. The whole prototype came to $213.61 in parts. A commercial myoelectric hand starts around $20,000, so the interesting question is not whether we matched one, it is how much of the function survives at one percent of the cost."
       ],
       image: {
         src: "/projects/emg/prototype.jpg",
@@ -230,6 +263,14 @@ GESTURE_ANGLES = {
   ],
   soleledger: [
     {
+      heading: "Why did I build this?",
+      paragraphs: [
+        "I started reselling sneakers freshman year purely because I love sneakers, not because I had a business plan. Buying and reselling let me actually experience pairs I could not afford to just keep.",
+        "What I did not have was the business side. I was bleeding margin without noticing, and as a solo seller juggling a few hundred pairs on top of a full school schedule, I could not analyze the market fast enough to keep up. I was skipping days to study pricing by hand.",
+        "SoleLedger started as the tool that fixed that for me. It also turned into a good place to get real experience with AI agents, pulling market data and running it through a sentiment pass that summarizes how different audiences might react to a shoe based on what is happening around it, which ended up teaching me as much as it saved me time."
+      ]
+    },
+    {
       heading: "Why this is a ledger",
       paragraphs: [
         "Almost all sneaker resale software is built to win the buy: checkout automation, queue skipping, CAPTCHA solving, scraped pricing. Most of it breaks somebody's terms of service to get there. Very little of it answers the duller question of whether the pair you bought last month actually made you any money.",
@@ -341,6 +382,14 @@ def calculate_roi(profit: Decimal, landed_cost: Decimal) -> Decimal:
   ],
   makerportfolio: [
     {
+      heading: "Why did I build this?",
+      paragraphs: [
+        "I was not strong at front-end work when I started this. It was basically my first serious front-end project, and I built it as much to get better at that as to have something to point people to.",
+        "The first version was a Flask app on purpose, so I could keep working in the language I am strongest in while I picked up everything else around it. Docker and AWS came in to actually teach me how a personal project gets deployed and kept running, not just written. I do not run either anymore. Everything today deploys straight to Vercel off Next.js.",
+        "Every rebuild since has been driven by wanting something that looks intentional and reacts to you, not a static resume online. The terminal is the clearest example. Nothing about the site needed it. I added it because it was fun to build, and it says more about how I think than a bullet list does."
+      ]
+    },
+    {
       heading: "From Flask to Next.js",
       paragraphs: [
         "The first version of this site was a Flask app I containerized with Docker and hosted on AWS. It taught me the parts of web work that tutorials skip: routing, deployment, and how much upkeep a personal site quietly demands once the novelty has worn off.",
@@ -414,6 +463,13 @@ ryVel += (BASE_SPIN - ryVel) * 0.03;`
   ],
   "buddy-ai": [
     {
+      heading: "Why did I build this?",
+      paragraphs: [
+        "I wanted my own version of a Jarvis-style assistant, but I did not want to just clone someone's repo and call it done. I took a little inspiration from what is out there and then built almost everything else around what actually makes my day faster.",
+        "It is less a product and more a tool I use for myself, constantly. I can control my entire desktop at a glance, it keeps my screen decluttered, and after using it this long it genuinely gets my work done faster. It was also just a good excuse to get hands-on with a bunch of APIs and see how far I could push something with direct access to my own machine."
+      ]
+    },
+    {
       heading: "From Dynamic Island clone to desktop buddy",
       paragraphs: [
         "This began as a Windows version of Apple's Dynamic Island and drifted away from that pretty quickly. A pill that mirrors notifications is a nice demo, but I wanted something closer to company. The compact form became a small liquid face with mint and coral styling and a few expressive states, living in a transparent Electron window that stays reachable, remembers where you put it, and clamps properly across multiple monitors.",
@@ -476,6 +532,13 @@ ryVel += (BASE_SPIN - ryVel) * 0.03;`
     }
   ],
   veridex: [
+    {
+      heading: "Why did I build this?",
+      paragraphs: [
+        "A lot of sites are written to get past an AI model rather than to inform the person reading them: phrasing planted to push a summarizer toward a more positive read than the page actually earns. I wanted a tool that pushes back on that instead of falling for it.",
+        "I also did not buy that everything needs a cloud model behind it. Between token limits and the compute you get allocated on hosted APIs, local inference felt like the more interesting problem, so I built Veridex to run entirely on-device and treat a page's own claims as something to check rather than trust. It doubled as a genuinely useful habit. Half of what it does is check a source before I believe it, and building it made me a better researcher for the same reason."
+      ]
+    },
     {
       heading: "The trust problem",
       paragraphs: [
@@ -562,6 +625,13 @@ async function askOllama(prompt) {
     }
   ],
   vibeshuffle: [
+    {
+      heading: "Why did I build this?",
+      paragraphs: [
+        "Music is how I reset my mood, whether that is coming down after being out with friends or locking into a focused headspace to code. Spotify's own recommendation engine is genuinely good, but it is tuned for taste, not for the specific mood I am trying to move into or out of right now.",
+        "I wanted to describe that in a sentence, something like coming back from hanging out and wanting to switch into work mode, and get a playlist that actually carries me from one mood to the other. It was also a real excuse to work with recommendation systems, which turned out to be harder and far more data-hungry than I expected. I am still not fully comfortable calling it live, but I use it myself and I like what it does, especially after Spotify cut back a lot of developer access in 2024 and made this kind of thing harder to build than it used to be."
+      ]
+    },
     {
       heading: "Beyond genre labels",
       paragraphs: [
