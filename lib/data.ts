@@ -18,10 +18,10 @@ export const projects = [
   {
     title: "EMG Prosthetic Hand",
     slug: "emg-prosthetic-hand",
-    role: "Embedded systems and machine learning",
+    role: "Project lead, machine learning and MLOps",
     description:
-      "A five finger prosthetic hand driven by forearm muscle signals. Two MyoWare sensors feed an Arduino Nano ESP32 at 100 Hz, a Random Forest sorts each second of signal into open, clamp, or point at 96% accuracy held out by recording, and a PCA9685 moves the servos only once the prediction has held steady.",
-    image: "/placeholders/prosthetic.svg",
+      "A $213 five finger prosthetic hand driven by forearm muscle signals, against $20,000 for the commercial equivalent. No sensor owns a finger: a Random Forest reads the whole array as one activation pattern, which means dexterity scales with sensor count and any residual muscle can drive the hand. 96% accuracy held out by recording, plus fatigue correction worth 15.7 points late in a session.",
+    image: "/projects/emg/prototype-card.jpg",
     tags: ["ESP32", "EMG", "Random Forest", "Assistive Tech"]
   },
   {

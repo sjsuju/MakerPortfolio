@@ -1,4 +1,5 @@
 import { ArrowLeft } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
@@ -13,6 +14,8 @@ type Section = {
   bullets?: string[];
   file?: string;
   code?: string;
+  image?: { src: string; alt: string; caption?: string; width: number; height: number };
+  accent?: boolean;
 };
 
 // ponytail: presentational only, no highlighting lib. Monochrome code, VS Code-style chrome.
@@ -41,8 +44,32 @@ const content: Record<string, Section[]> = {
       heading: "Reading the muscle directly",
       paragraphs: [
         "Cheap prosthetic hands are usually driven by a switch, an app, or a shoulder harness. All of those ask you to operate the hand. The signal you actually want is already sitting in the forearm: every time someone tries to close their hand, the muscle fires, whether or not the hand is there to respond.",
-        "So the hand reads that signal. Two MyoWare 2.0 sensors sit on the forearm, an Arduino Nano ESP32 samples them, a Random Forest works out which gesture the muscle is making, and a PCA9685 drives five servos that pull the fingers through tendon strings. I care about keeping it cheap and comfortable, and those constraints shaped most of the decisions below."
-      ]
+        "So the hand reads that signal. MyoWare 2.0 sensors sit on the forearm, an Arduino Nano ESP32 samples them, a Random Forest works out which gesture the muscle is making, and a PCA9685 drives five servos that pull the fingers through tendon strings. The whole prototype came to $213.61 in parts. A commercial myoelectric hand starts around $20,000, so the interesting question is not whether we matched one, it is how much of the function survives at one percent of the cost.",
+        "I spearheaded the project and led the ML side and the outreach. Prathamesh Kulkarni built most of the hardware, and Misha Arturov handled implementation and testing. Both are close friends of mine, and the thing does not exist without either of them."
+      ],
+      image: {
+        src: "/projects/emg/prototype.jpg",
+        alt: "The assembled 3D-printed prosthetic hand next to its breadboard, ESP32, PCA9685 driver, and servo wiring harness.",
+        caption: "The assembled prototype. Five MG90S servos in the forearm pull the fingers through tendon strings; the control electronics still live outside the arm.",
+        width: 977,
+        height: 1295
+      }
+    },
+    {
+      heading: "Activation patterns, not one sensor per finger",
+      paragraphs: [
+        "The usual myoelectric wiring is one sensor to one output: this muscle site opens the hand, that one closes it. It is simple and it caps you immediately. Every new motion needs a new clean muscle site, and most amputees do not have a row of conveniently separated ones waiting.",
+        "We treat the sensor array as a single pattern instead. No individual sensor owns a finger. The classifier looks at how all of them move together, and a gesture is a shape across the whole array rather than a threshold on one channel. That is what makes point and clamp separable when each sensor alone reads nearly identical: the difference is not amplitude anywhere, it is whether the sites fire together or against each other.",
+        "Two things fall out of that. Sensor count becomes a dial rather than a design constraint. Any additional site that reads distinguishably from its neighbors adds dimensions to the pattern space, so dexterity scales with sensors instead of being fixed at build time. And the sites do not have to be the anatomically correct ones. Whatever residual muscle a user still controls, anywhere on the body, can become part of the pattern, because the model only needs the signals to be repeatable, not to correspond to the motion being made.",
+        "Practically, that means a user with an unusual amputation is a calibration problem instead of a redesign problem."
+      ],
+      image: {
+        src: "/projects/emg/electrodes.jpg",
+        alt: "MyoWare EMG sensors adhered to a forearm with medical electrodes and jumper wiring.",
+        caption: "Electrode placement on the forearm. Sites are chosen for signal separability from each other, not for mapping onto specific fingers.",
+        width: 1080,
+        height: 1920
+      }
     },
     {
       heading: "Sampling and windows",
@@ -51,6 +78,13 @@ const content: Record<string, Section[]> = {
         "The constant that caused me the most grief is the ADC width. An Arduino Nano ESP32 reads 12 bits, so 0 to 4095, while an AVR Nano tops out at 1023. The same contraction produces roughly four times the number depending on which board you plugged in, and a model trained on one is worthless on the other. Nothing warns you. Switching boards means re-recording everything and retraining.",
         "There is a related trap on the sensor output. The MyoWare has RAW, RECT, and ENV pins, and only ENV works at this sample rate. The other two alias at 100 Hz and you get garbage that still looks plausible on a plot."
       ],
+      image: {
+        src: "/projects/emg/raw-signal.png",
+        alt: "Line chart of three EMG sensor channels over about 18 seconds, showing spiky bursts against a near-zero baseline.",
+        caption: "Raw capture from three sites. Averaging a window of this tells you almost nothing, which is why every window becomes a feature vector before the model sees it.",
+        width: 2560,
+        height: 1440
+      },
       file: "hosailc/train_model_2sensor.py",
       code: `SENSOR_COLUMNS = ["sensor1", "sensor2"]
 
@@ -111,12 +145,35 @@ MIN_CONFIDENCE = 0.60
 STABLE_WINDOWS_REQUIRED = 3`
     },
     {
+      heading: "Fatigue is the failure mode, and it does not look like one",
+      paragraphs: [
+        "Hold a contraction for twenty minutes and the same intended gesture comes out quieter. Amplitude falls, and because almost every feature is derived from amplitude, the entire feature vector drifts out of the distribution the forest was trained on. The obvious guess is that the model gets uncertain and the confidence gate catches it. That is not what happens.",
+        "At 12 percent of starting amplitude, 97 percent of windows still clear the confidence threshold and get acted on, while usable accuracy has fallen to 73.5 percent. The model is not unsure. It is confidently wrong, and confidence gating is exactly the wrong instrument for that. We tested the intuitive fix too, lowering the threshold in proportion to the decay, and kept it in the file as a negative control: it recovers 1.1 points. You cannot threshold your way out of confident-and-wrong.",
+        "What works is treating decay as a measurable quantity rather than noise. The system tracks how far amplitude has fallen against the session's own baseline and scales the signal back toward the trained distribution, so the forest keeps seeing features in the range it learned. Two guards make that safe. A deadband at 85 percent means mild decay is left alone, since correcting small drift is really just amplifying noise, and adding that guard was worth 8 points on its own. And the decision rule switches from a moving confidence threshold to a fixed margin floor: the winning class has to beat the runner-up by a set margin. A threshold moves as the signal degrades. A margin between two classes does not, so sensitivity comes back without false confidence coming with it.",
+        "Together that is 15.7 points of usable accuracy at heavy fatigue. The honest caveat is that this is validated leave-one-recording-out across 14 recordings with fatigue simulated as an amplitude ramp, and it is not in the live control loop yet. Real fatigue also shifts the frequency content, not just the amplitude, so the simulation is optimistic in a way I have not measured."
+      ],
+      image: {
+        src: "/projects/emg/fatigue.png",
+        alt: "Slide comparing usable accuracy across amplitude decay for three strategies: gain plus threshold stays near 90 percent while fixed and threshold-only fall to about 74 percent.",
+        caption: "Usable accuracy against remaining amplitude. Gain correction with a margin floor holds where both the fixed pipeline and threshold-only adjustment collapse.",
+        width: 1600,
+        height: 900
+      }
+    },
+    {
       heading: "What the accuracy actually is",
       paragraphs: [
         "The training script reports about 99 percent, and that number is not real. Windows overlap by half, so a random train/test split drops nearly identical windows on both sides and the model gets graded partly on data it already saw. It runs roughly 12 points high.",
         "The honest version holds out a whole recording at a time and retrains, which is the closest offline stand-in for a session the model has never seen. That gives 96.0 percent on average across folds, with the worst fold at 90.6 percent. Both scripts still exist, and the evaluation one has a note in its docstring saying to use its number in write-ups, mostly so future me does not quote the flattering one by accident.",
         "The interesting part is which gesture is worst, because it keeps moving. An earlier evaluation put the mean at 87 percent with point as the weak class at 74.7 percent recall, since point reads as open or clamp when the signal is ambiguous. The fix was boring: record more point data. Point is now at 100 percent and the overall mean went to 96. That promoted clamp to worst class at 88 percent, and clamp currently has three recordings against open's six and point's five. So the next improvement is already obvious, and it is more clamp recordings."
       ],
+      image: {
+        src: "/projects/emg/log-loss.png",
+        alt: "Training and validation cross-entropy loss against number of decision trees, both flattening well before 200 trees.",
+        caption: "Validation loss settles around 50 trees. Two hundred is not doing extra work, it is buying stability in the class probabilities the confidence gate reads.",
+        width: 1280,
+        height: 720
+      },
       file: "evaluate_2sensor.py output",
       code: `Running 3 folds, holding out one recording per gesture each time.
 Window 100 samples, step 50, 1.0s of signal per decision.
@@ -159,6 +216,16 @@ GESTURE_ANGLES = {
     "clamp": CLAMP,
     "point": POINT,
 }`
+    },
+    {
+      heading: "What if the muscle is not the best place to listen?",
+      accent: true,
+      paragraphs: [
+        "Everything above works around one inherited assumption: that the signal has to be read off a muscle. That assumption is what puts electrodes on skin, and skin is where all the hard problems live. Electrodes shift. Sweat changes impedance. Muscles fatigue. And a user with very little residual muscle gets very little to work with, no matter how good the classifier is.",
+        "The intent, though, does not originate in the arm. It originates upstream, and the muscle is only the last place it becomes measurable. If you can read it earlier, most of the failure modes on this page stop being your problem. Fatigue is a property of muscle, not of intent. Electrode shift is a property of a skin interface that no longer needs to exist on the limb.",
+        "So the version I actually want to build reads EEG instead. The pattern-based approach transfers directly, because nothing in it assumes the channels are muscles. It only assumes the channels are repeatable and distinguishable from each other, which is exactly the property a scalp array has. Same feature extraction, same forest, different source. That also strips the electronics off the prosthetic itself: the hand goes back to being servos and a receiver, and everything heavy moves to a headset that is not hanging off the end of an arm.",
+        "The obvious catch is that inferring motor intent from EEG is a substantially harder classification problem than reading a contracting forearm, and non-invasive EEG has a much worse signal-to-noise ratio than surface EMG. I do not think that is a reason not to try it. It is a reason the model has to be much better than the one running today, and knowing which of the two is the bottleneck is worth finding out."
+      ]
     }
   ],
   soleledger: [
@@ -631,7 +698,11 @@ export default async function ProjectDetailPage({
         <div className="mt-12 grid max-w-3xl gap-6">
           {sections ? (
             sections.map((section) => (
-              <Card key={section.heading} className="p-6 md:p-8" data-reveal>
+              <Card
+                key={section.heading}
+                className={section.accent ? "border-primary/40 p-6 md:p-8" : "p-6 md:p-8"}
+                data-reveal
+              >
                 <h2 className="text-xl font-semibold tracking-tight">{section.heading}</h2>
                 {section.paragraphs.map((paragraph, i) => (
                   <p key={i} className="mt-4 leading-7 text-muted-foreground">
@@ -647,6 +718,23 @@ export default async function ProjectDetailPage({
                       </li>
                     ))}
                   </ul>
+                ) : null}
+                {section.image ? (
+                  <figure className="mt-5">
+                    <Image
+                      src={section.image.src}
+                      alt={section.image.alt}
+                      width={section.image.width}
+                      height={section.image.height}
+                      sizes="(min-width: 768px) 42rem, 100vw"
+                      className="w-full rounded-lg border border-border bg-background/40 object-contain"
+                    />
+                    {section.image.caption ? (
+                      <figcaption className="mt-2 font-mono text-[11px] leading-5 tracking-tight text-muted-foreground">
+                        {section.image.caption}
+                      </figcaption>
+                    ) : null}
+                  </figure>
                 ) : null}
                 {section.file && section.code ? (
                   <CodeWindow file={section.file} code={section.code} />
