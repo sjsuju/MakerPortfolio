@@ -1,14 +1,9 @@
 import type { Metadata } from "next";
-import { Chakra_Petch, JetBrains_Mono, Space_Grotesk } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-const displayFont = Chakra_Petch({
-  weight: ["500", "600", "700"],
-  subsets: ["latin"],
-  variable: "--font-display"
-});
-
-const sansFont = Space_Grotesk({
+// --font-display aliases --font-sans in globals.css, so `font-display` still works.
+const sansFont = Inter({
   subsets: ["latin"],
   variable: "--font-sans"
 });
@@ -33,7 +28,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${displayFont.variable} ${sansFont.variable} ${monoFont.variable}`}
+      className={`${sansFont.variable} ${monoFont.variable}`}
     >
       <head>
         {/* Set the theme class before paint to prevent a flash of the wrong theme. */}

@@ -18,7 +18,7 @@ export function Navbar() {
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
   return (
-    <header className="glass-bar sticky top-0 z-50 border-b border-white/50 dark:border-white/10">
+    <header className="glass-bar sticky top-0 z-50 border-b border-border">
       <div className="container flex h-16 items-center justify-between">
         <Link
           href="/"
@@ -90,7 +90,7 @@ export function Navbar() {
         </div>
       </div>
       {open ? (
-        <div className="glass-bar border-t border-white/50 dark:border-white/10 lg:hidden">
+        <div className="glass-bar border-t border-border lg:hidden">
           <nav className="container grid gap-1 py-3">
             {navItems.map((item) => (
               <div key={item.href}>

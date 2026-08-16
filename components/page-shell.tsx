@@ -6,7 +6,6 @@ import { ScrambleManager } from "@/components/scramble-manager";
 export function PageShell({ children }: { children: React.ReactNode }) {
   return (
     <div className="relative min-h-screen overflow-x-clip">
-      <div className="gear-field" aria-hidden="true" />
       <RevealManager />
       <ScrambleManager />
       <Navbar />

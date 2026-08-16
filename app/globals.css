@@ -3,44 +3,46 @@
 @tailwind utilities;
 
 :root {
-  /* Warm haystack light theme. Background is Half Haystack (#E6D3B3),
-     cards are cream (#EFE7DA) so they lift off the background. */
-  --background: 38 50% 80%;
-  --foreground: 30 12% 14%;
-  --card: 39 42% 90%;
-  --card-foreground: 30 12% 14%;
-  --primary: 209 100% 36%;
+  --background: 240 20% 99%;
+  --foreground: 240 6% 10%;
+  --card: 0 0% 100%;
+  --card-foreground: 240 6% 10%;
+  /* Blue and orange are darkened vs their dark-mode twins so body-size text
+     clears WCAG AA (4.5:1) on the near-white background. */
+  --primary: 211 100% 42%;
   --primary-foreground: 0 0% 100%;
-  --secondary: 38 34% 84%;
-  --secondary-foreground: 211 95% 33%;
-  --muted: 38 36% 86%;
-  --muted-foreground: 30 10% 38%;
-  --accent: 210 100% 84%;
-  --accent-foreground: 211 95% 33%;
-  --hazard: 23 73% 40%;
-  --border: 36 28% 72%;
-  --input: 36 28% 74%;
-  --ring: 209 100% 36%;
-  --radius: 0.5rem;
+  --secondary: 240 5% 96%;
+  --secondary-foreground: 240 6% 10%;
+  --muted: 240 5% 96%;
+  --muted-foreground: 240 4% 46%;
+  --accent: 240 5% 96%;
+  --accent-foreground: 240 6% 10%;
+  --hazard: 25 95% 38%;
+  --border: 240 6% 90%;
+  --input: 240 6% 90%;
+  --ring: 211 100% 42%;
+  --radius: 0.75rem;
+  /* font-display resolves to the sans stack; the display face was removed. */
+  --font-display: var(--font-sans);
 }
 
 .dark {
-  --background: 0 0% 12%;
-  --foreground: 0 0% 80%;
-  --card: 240 1% 15%;
-  --card-foreground: 0 0% 80%;
-  --primary: 207 61% 59%;
+  --background: 240 6% 4%;
+  --foreground: 0 0% 93%;
+  --card: 240 5% 8%;
+  --card-foreground: 0 0% 93%;
+  --primary: 211 100% 55%;
   --primary-foreground: 0 0% 100%;
-  --secondary: 240 3% 18%;
-  --secondary-foreground: 201 98% 80%;
-  --muted: 240 1% 17%;
-  --muted-foreground: 0 0% 56%;
-  --accent: 210 52% 31%;
-  --accent-foreground: 201 98% 80%;
-  --hazard: 41 53% 67%;
-  --border: 0 0% 24%;
-  --input: 0 0% 24%;
-  --ring: 204 100% 40%;
+  --secondary: 240 4% 13%;
+  --secondary-foreground: 0 0% 93%;
+  --muted: 240 4% 13%;
+  --muted-foreground: 240 4% 55%;
+  --accent: 240 4% 13%;
+  --accent-foreground: 0 0% 93%;
+  --hazard: 25 95% 60%;
+  --border: 240 4% 16%;
+  --input: 240 4% 16%;
+  --ring: 211 100% 55%;
 }
 
 * {
@@ -53,215 +55,82 @@ html {
 
 body {
   min-height: 100vh;
-  background:
-    radial-gradient(circle at top left, rgba(0, 122, 204, 0.1), transparent 30rem),
-    radial-gradient(circle at top right, rgba(193, 93, 30, 0.07), transparent 26rem),
-    hsl(var(--background));
+  background: hsl(var(--background));
   color: hsl(var(--foreground));
   font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 h1,
 h2,
 h3 {
   font-family: var(--font-display), var(--font-sans), sans-serif;
+  letter-spacing: -0.022em;
+}
+
+h1 {
+  letter-spacing: -0.03em;
 }
 
 ::selection {
   background: hsl(var(--hazard) / 0.28);
 }
 
-/* ---------------------------------------------------------------------------
-   Gear field: fixed faint drafting grid behind all content. Cards use
-   backdrop-filter, so the grid blurs behind them like frosted glass.
---------------------------------------------------------------------------- */
-
+/* No-op: the drafting-grid overlay was removed, the div may still exist. */
 .gear-field {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-}
-
-.gear-field::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  /* Sepia pencil grid on the haystack vellum (dark mode overrides below). */
-  background-image:
-    linear-gradient(rgba(82, 55, 22, 0.13) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(82, 55, 22, 0.13) 1px, transparent 1px),
-    linear-gradient(rgba(82, 55, 22, 0.2) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(82, 55, 22, 0.2) 1px, transparent 1px);
-  background-size:
-    32px 32px,
-    32px 32px,
-    160px 160px,
-    160px 160px;
-}
-
-.dark .gear-field::before {
-  background-image:
-    linear-gradient(rgba(148, 163, 184, 0.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(148, 163, 184, 0.07) 1px, transparent 1px),
-    linear-gradient(rgba(148, 163, 184, 0.11) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(148, 163, 184, 0.11) 1px, transparent 1px);
+  display: none;
 }
 
 /* ---------------------------------------------------------------------------
-   Glass surfaces: frosted panels over the gear field.
+   Surfaces.
 --------------------------------------------------------------------------- */
 
-/* In the components layer so Tailwind utilities (fixed, overflow-visible, ...) can override. */
+/* In the components layer so Tailwind utilities (fixed, overflow-visible, ...)
+   win. A previous version set `position: relative` outside the layer and beat
+   the `fixed` utility. Do not set position here. */
 @layer components {
   .glass-panel {
-    position: relative;
-    isolation: isolate;
     overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    /* Cream (#EFE7DA) fill so cards lift off the haystack background while
-       staying translucent enough for the frosted-glass effect (blurred grid
-       shows through). Dark mode overrides below. */
-    background:
-      linear-gradient(145deg, rgba(240, 232, 219, 0.6), rgba(238, 231, 218, 0.48) 52%, rgba(236, 229, 216, 0.42));
-    backdrop-filter: blur(6px) saturate(1.65) brightness(1.12) contrast(1.01);
-    -webkit-backdrop-filter: blur(6px) saturate(1.65) brightness(1.12) contrast(1.01);
-    box-shadow:
-      0 22px 66px rgba(84, 58, 24, 0.09),
-      inset 0 1px 0 rgba(255, 255, 255, 0.7),
-      inset 1px 0 0 rgba(255, 255, 255, 0.28),
-      inset 0 -1px 0 rgba(255, 255, 255, 0.16),
-      inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+    border: 1px solid hsl(var(--border));
+    border-radius: var(--radius);
+    background: hsl(var(--card));
   }
-}
 
-.glass-panel::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  border-radius: inherit;
-  background:
-    radial-gradient(ellipse 30% 28% at -5% -6%, rgba(217, 70, 239, 0.24), transparent 68%),
-    radial-gradient(ellipse 28% 26% at 105% 8%, rgba(34, 211, 238, 0.22), transparent 68%),
-    radial-gradient(ellipse 24% 22% at 100% 108%, rgba(250, 204, 21, 0.13), transparent 68%),
-    linear-gradient(120deg, rgba(255, 255, 255, 0.16), transparent 22%, rgba(255, 255, 255, 0.025) 100%);
-  opacity: 0.36;
-  mix-blend-mode: screen;
-  pointer-events: none;
-}
-
-.glass-panel::after {
-  content: "";
-  position: absolute;
-  inset: 1px;
-  z-index: 0;
-  border-radius: calc(var(--radius) - 1px);
-  background:
-    linear-gradient(165deg, transparent 0 40%, rgba(255, 255, 255, 0.075) 48%, transparent 60%),
-    radial-gradient(ellipse at 50% -18%, rgba(255, 255, 255, 0.16), transparent 38%);
-  opacity: 0.24;
-  pointer-events: none;
-}
-
-.glass-panel > * {
-  position: relative;
-  z-index: 1;
-}
-
-.dark .glass-panel {
-  border-color: rgba(255, 255, 255, 0.22);
-  background:
-    linear-gradient(145deg, rgba(255, 255, 255, 0.004), transparent 58%, transparent);
-  box-shadow:
-    0 22px 62px rgba(0, 0, 0, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.34),
-    inset 1px 0 0 rgba(255, 255, 255, 0.14),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.08),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.055);
-}
-
-.dark .glass-panel::before {
-  background:
-    radial-gradient(ellipse 30% 28% at -5% -6%, rgba(217, 70, 239, 0.28), transparent 68%),
-    radial-gradient(ellipse 28% 26% at 105% 8%, rgba(34, 211, 238, 0.26), transparent 68%),
-    radial-gradient(ellipse 24% 22% at 100% 108%, rgba(250, 204, 21, 0.16), transparent 68%),
-    linear-gradient(120deg, rgba(255, 255, 255, 0.08), transparent 22%, rgba(255, 255, 255, 0.018) 100%);
-  opacity: 0.34;
-}
-
-.dark .glass-panel::after {
-  background:
-    linear-gradient(165deg, transparent 0 40%, rgba(255, 255, 255, 0.07) 48%, transparent 60%),
-    radial-gradient(ellipse at 50% -18%, rgba(255, 255, 255, 0.13), transparent 38%);
-  opacity: 0.28;
-}
-
-.glass-inverse {
-  border-color: rgba(255, 255, 255, 0.22);
-  background:
-    linear-gradient(145deg, rgba(255, 255, 255, 0.018), rgba(255, 255, 255, 0.004) 58%, rgba(255, 255, 255, 0.002));
-  box-shadow:
-    0 22px 68px rgba(15, 23, 42, 0.18),
-    inset 0 1px 0 rgba(255, 255, 255, 0.28);
-}
-
-.glass-inverse::before {
-  background:
-    linear-gradient(120deg, rgba(255, 255, 255, 0.12), transparent 31%),
-    radial-gradient(circle at 100% 0%, rgba(255, 255, 255, 0.045), transparent 16rem);
-  opacity: 0.5;
-}
-
-.liquid-icon {
-  border: 1px solid rgba(255, 255, 255, 0.28);
-  background: rgba(255, 255, 255, 0.01);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.34),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.12),
-    0 10px 24px rgba(0, 0, 0, 0.055);
-  backdrop-filter: blur(8px) saturate(1.8) brightness(1.16);
-  -webkit-backdrop-filter: blur(8px) saturate(1.8) brightness(1.16);
+  .glass-inverse,
+  .liquid-icon {
+    border: 1px solid hsl(var(--border));
+    border-radius: var(--radius);
+    background: hsl(var(--card));
+  }
 }
 
 .glass-hover {
   transition:
-    transform 160ms ease,
-    border-color 160ms ease,
-    box-shadow 160ms ease;
+    transform 150ms ease,
+    border-color 150ms ease,
+    box-shadow 150ms ease;
 }
 
 .glass-hover:hover {
-  transform: translateY(-3px);
-  border-color: hsl(var(--primary) / 0.32);
-  box-shadow:
-    0 26px 72px rgba(84, 58, 24, 0.14),
-    inset 0 1px 0 rgba(255, 255, 255, 0.68),
-    inset 1px 0 0 rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+  border-color: hsl(var(--primary) / 0.4);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
 }
 
 .dark .glass-hover:hover {
-  border-color: hsl(var(--primary) / 0.4);
-  box-shadow:
-    0 24px 68px rgba(0, 0, 0, 0.28),
-    inset 0 1px 0 rgba(255, 255, 255, 0.24),
-    inset 1px 0 0 rgba(255, 255, 255, 0.14);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
 }
 
+/* Sticky nav/footer: the one place a real blur belongs. */
 .glass-bar {
-  background: rgba(244, 238, 227, 0.62);
-  backdrop-filter: blur(24px) saturate(1.55);
-  -webkit-backdrop-filter: blur(24px) saturate(1.55);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.64);
-}
-
-.dark .glass-bar {
-  background: rgba(7, 12, 22, 0.55);
+  background: hsl(var(--background) / 0.72);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
 }
 
 /* ---------------------------------------------------------------------------
    Interactive polish: CSS-only tooltips, nav underline, focus rings.
-   All driven by attributes/classes so there is no JS and no new dependency.
 --------------------------------------------------------------------------- */
 
 /* Keyboard focus ring for links (buttons carry their own ring via cva). */
@@ -394,50 +263,6 @@ a:focus-visible {
   }
 }
 
-.grid-pattern {
-  background-image:
-    linear-gradient(rgba(15, 23, 42, 0.055) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(15, 23, 42, 0.055) 1px, transparent 1px);
-  background-size: 36px 36px;
-}
-
-.noise-mask {
-  mask-image: linear-gradient(to bottom, black, transparent);
-}
-
-.pcb-field {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  background:
-    linear-gradient(120deg, rgba(248, 250, 252, 0.38), rgba(241, 245, 249, 0.18)),
-    radial-gradient(circle at 74% 22%, rgba(13, 148, 136, 0.13), transparent 24rem),
-    radial-gradient(circle at 20% 78%, rgba(249, 115, 22, 0.09), transparent 24rem);
-}
-
-.pcb-glow {
-  position: absolute;
-  border-radius: 999px;
-  filter: blur(12px);
-  opacity: 0.5;
-}
-
-.pcb-glow-one {
-  right: 9%;
-  top: 9%;
-  width: 18rem;
-  height: 18rem;
-  background: rgba(20, 184, 166, 0.16);
-}
-
-.pcb-glow-two {
-  bottom: 8%;
-  left: 12%;
-  width: 16rem;
-  height: 16rem;
-  background: rgba(217, 119, 6, 0.12);
-}
-
 .resume-sheet {
   max-width: 8.5in;
   padding: 0.55rem;
@@ -512,13 +337,3 @@ a:focus-visible {
     object-fit: contain !important;
   }
 }
-
-/* Dark-mode overrides for the custom PCB homepage surfaces. The base .pcb-*
-   rules use hardcoded light colors, so each themed surface is overridden here. */
-.dark .pcb-field {
-  background:
-    linear-gradient(120deg, rgba(15, 23, 42, 0.32), rgba(2, 6, 23, 0.38)),
-    radial-gradient(circle at 74% 22%, rgba(13, 148, 136, 0.18), transparent 24rem),
-    radial-gradient(circle at 20% 78%, rgba(249, 115, 22, 0.1), transparent 24rem);
-}
-

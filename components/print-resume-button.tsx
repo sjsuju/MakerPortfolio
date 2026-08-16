@@ -55,7 +55,7 @@ export function PrintResumeButton() {
       {open ? (
         <div
           role="menu"
-          className="mt-2 overflow-hidden rounded-lg border border-white/[0.12] bg-slate-900/[0.85] shadow-glow backdrop-blur-xl"
+          className="mt-2 overflow-hidden rounded-lg border border-border bg-card shadow-glow"
         >
           <button
             type="button"
@@ -64,7 +64,7 @@ export function PrintResumeButton() {
               setOpen(false);
               window.print();
             }}
-            className="flex w-full items-center gap-2 px-4 py-3 text-left text-sm text-white hover:bg-white/10"
+            className="flex w-full items-center gap-2 px-4 py-3 text-left text-sm text-foreground hover:bg-muted"
           >
             <Printer className="h-4 w-4" /> Print resume
           </button>
@@ -73,7 +73,7 @@ export function PrintResumeButton() {
             href={RESUME_PDF}
             download="Sooraj-Sathyajith-Resume.pdf"
             onClick={() => setOpen(false)}
-            className="flex w-full items-center gap-2 border-t border-white/[0.08] px-4 py-3 text-left text-sm text-white hover:bg-white/10"
+            className="flex w-full items-center gap-2 border-t border-border px-4 py-3 text-left text-sm text-foreground hover:bg-muted"
           >
             <Download className="h-4 w-4" /> Download PDF
           </a>

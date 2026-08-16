@@ -3,7 +3,7 @@ import { navItems } from "@/lib/data";
 
 export function Footer() {
   return (
-    <footer className="glass-bar border-t border-white/50 dark:border-white/10">
+    <footer className="glass-bar border-t border-border">
       <div className="container flex flex-col gap-6 py-10 md:flex-row md:items-center md:justify-between">
         <div>
           <p className="font-display font-semibold">Sooraj Sathyajith</p>

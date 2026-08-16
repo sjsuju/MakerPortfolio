@@ -6,26 +6,21 @@ export default function Home() {
   return (
     <PageShell>
       <section className="relative isolate min-h-[calc(100vh-4rem)] overflow-hidden">
-        <div className="pcb-field" aria-hidden="true">
-          <div className="pcb-glow pcb-glow-one" />
-          <div className="pcb-glow pcb-glow-two" />
-        </div>
-
-        <div className="container relative z-10 flex min-h-[calc(100vh-4rem)] flex-col gap-10 py-14 md:grid md:grid-cols-2 md:items-center md:gap-8">
-          <div className="max-w-xl md:self-start md:pt-16">
+        <div className="container relative z-10 flex min-h-[calc(100vh-4rem)] flex-col gap-10 py-12 md:grid md:grid-cols-2 md:items-center md:gap-10">
+          <div className="max-w-xl md:self-start md:pt-10">
             <p className="font-mono text-xs font-semibold uppercase tracking-[0.22em] text-primary">
               <span aria-hidden="true" className="mr-2 text-hazard">
                 {"//"}
               </span>
               Technical maker portfolio
             </p>
-            <h1 className="mt-5 text-5xl font-semibold tracking-tight text-foreground md:text-7xl">
+            <h1 className="mt-5 text-5xl font-semibold leading-[1.05] tracking-tight text-foreground md:text-7xl">
               Sooraj Sathyajith
             </h1>
-            <p className="mt-5 max-w-xl text-base leading-7 text-muted-foreground md:text-lg">
+            <p className="mt-5 max-w-lg text-base leading-7 text-muted-foreground md:text-lg">
               Robotics, assistive tech, AI tools, embedded systems, and web builds.
             </p>
-            <div className="mt-6">
+            <div className="mt-7">
               <HeroTerminal />
             </div>
           </div>

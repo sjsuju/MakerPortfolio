@@ -21,7 +21,7 @@ type Section = {
 // ponytail: presentational only, no highlighting lib. Monochrome code, VS Code-style chrome.
 function CodeWindow({ file, code }: { file: string; code: string }) {
   return (
-    <div className="code-window mt-5 overflow-hidden rounded-lg border border-border bg-background/70 dark:bg-black/40">
+    <div className="code-window mt-5 overflow-hidden rounded-lg border border-border bg-secondary">
       <div className="flex items-center gap-2.5 border-b border-border px-4 py-2">
         <span aria-hidden="true" className="flex gap-1.5">
           <span className="h-2.5 w-2.5 rounded-full bg-hazard/70" />

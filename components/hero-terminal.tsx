@@ -146,7 +146,7 @@ export function HeroTerminal() {
       aria-label="Interactive terminal"
       className="glass-panel print-hide flex h-80 w-full flex-col overflow-hidden rounded-lg"
     >
-      <div className="flex shrink-0 items-center border-b border-white/30 px-3 py-2 dark:border-white/10">
+      <div className="flex shrink-0 items-center border-b border-border px-3 py-2">
         <span className="font-mono text-[0.65rem] uppercase tracking-[0.2em] text-muted-foreground">
           terminal
         </span>
@@ -182,7 +182,7 @@ export function HeroTerminal() {
         ))}
       </div>
 
-      <form onSubmit={onSubmit} className="flex shrink-0 items-center gap-2 border-t border-white/30 px-3 py-2 dark:border-white/10">
+      <form onSubmit={onSubmit} className="flex shrink-0 items-center gap-2 border-t border-border px-3 py-2">
         <span className="font-mono text-xs text-hazard">visitor@sooraj:~$</span>
         <input
           ref={inputRef}

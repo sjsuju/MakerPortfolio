@@ -71,7 +71,7 @@ export default function ProjectsPage() {
           ))}
         </div>
       </section>
-      <section className="bg-foreground/[0.03] py-16 dark:bg-white/[0.02]">
+      <section className="bg-secondary py-16">
         <div className="container">
           <SectionHeading
             eyebrow="Maker Portfolio"

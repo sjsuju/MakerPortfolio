@@ -57,7 +57,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <section className="bg-foreground/[0.03] py-16 dark:bg-white/[0.02]">
+      <section className="bg-secondary py-16">
         <div className="container">
           <SectionHeading
             eyebrow="Contact"
@@ -66,22 +66,26 @@ export default function ContactPage() {
           />
           <div className="mx-auto mt-12 grid max-w-4xl gap-5 md:grid-cols-3">
             {contactLinks.map((link) => (
-              <Card key={link.label} className="p-6" data-reveal>
-                <div className="liquid-icon mb-6 flex h-11 w-11 items-center justify-center rounded-lg text-primary">
-                  {link.label === "Email" ? (
-                    <Mail className="h-5 w-5" />
-                  ) : (
-                    <ArrowUpRight className="h-5 w-5" />
-                  )}
-                </div>
-                <p className="font-semibold">{link.label}</p>
-                <Link
-                  href={link.href}
-                  className="mt-2 block break-words text-sm text-muted-foreground hover:text-foreground"
-                >
-                  {link.value}
-                </Link>
-              </Card>
+              <Link
+                key={link.label}
+                href={link.href}
+                className="group block rounded-lg"
+                data-reveal
+              >
+                <Card className="h-full p-6">
+                  <div className="liquid-icon mb-6 flex h-11 w-11 items-center justify-center rounded-lg text-primary">
+                    {link.label === "Email" ? (
+                      <Mail className="h-5 w-5" />
+                    ) : (
+                      <ArrowUpRight className="h-5 w-5" />
+                    )}
+                  </div>
+                  <p className="font-semibold">{link.label}</p>
+                  <p className="mt-2 break-words text-sm text-muted-foreground transition-colors group-hover:text-foreground">
+                    {link.value}
+                  </p>
+                </Card>
+              </Link>
             ))}
           </div>
           <div className="mt-10 text-center">
